@@ -6,8 +6,11 @@ namespace Parchis
    {
       static void Main(string[] args)
       {
-         Game game = new Game(
-            new Player[] {
+         Game game = new Game
+         (
+            new Board(),
+            new Player[]
+            {
                new Player(Color.Green),
                new Player(Color.Blue),
             }

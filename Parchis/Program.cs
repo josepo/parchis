@@ -12,7 +12,7 @@ namespace Parchis
             new Players
             {
                new Player(Color.Green),
-               new Player(Color.Blue),
+               new Player(Color.Blue)
             }
          );
 

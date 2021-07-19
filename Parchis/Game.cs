@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Text;
 
 namespace Parchis
 {
@@ -25,7 +25,13 @@ namespace Parchis
 
       public override string ToString()
       {
-         return $"Game with { Players.Count() } players";
+         return
+            new StringBuilder()
+               .AppendLine()
+               .AppendLine("Game")
+               .AppendLine()
+               .Append(Players.ToString())
+               .ToString();
       }
    }
 }

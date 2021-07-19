@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Parchis
 {
@@ -19,6 +20,16 @@ namespace Parchis
             throw new System.Exception("All players should have a unique color.");
 
          _players.Add(player.Clone() as Player);
+      }
+
+      public override string ToString()
+      {
+         StringBuilder builder = new StringBuilder();
+         
+         foreach(Player player in _players)
+            builder = builder.AppendLine(player.ToString());
+
+         return builder.ToString();
       }
 
       public IEnumerator<Player> GetEnumerator()

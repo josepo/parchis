@@ -18,7 +18,7 @@ namespace Parchis
          if (_players.Any(p => p.Color == player.Color))
             throw new System.Exception("All players should have a unique color.");
 
-         _players.Add(player);
+         _players.Add(player.Clone() as Player);
       }
 
       public IEnumerator<Player> GetEnumerator()

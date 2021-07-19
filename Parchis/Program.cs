@@ -9,7 +9,7 @@ namespace Parchis
          Game game = new Game
          (
             new Board(),
-            new Player[]
+            new Players
             {
                new Player(Color.Green),
                new Player(Color.Blue),
@@ -19,7 +19,7 @@ namespace Parchis
          while (!game.End())
          {
             game.Move();
-            
+
             Console.WriteLine(game);
          }
 

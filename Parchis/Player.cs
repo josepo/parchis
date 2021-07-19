@@ -1,5 +1,3 @@
-using System;
-
 namespace Parchis
 {
    public class Player

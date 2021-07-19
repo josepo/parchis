@@ -1,13 +1,14 @@
 using System;
+using System.Linq;
 
 namespace Parchis
 {
    public class Game
    {
       private Board Board { get; set; }
-      private Player[] Players { get; set; }
+      private Players Players { get; set; }
 
-      public Game(Board board, Player[] players)
+      public Game(Board board, Players players)
       {
          Board = board ?? throw new ArgumentNullException(nameof(board));
          Players = players ?? throw new ArgumentNullException(nameof(players));
@@ -24,7 +25,7 @@ namespace Parchis
 
       public override string ToString()
       {
-         return $"Game with { Players.Length } players";
+         return $"Game with { Players.Count() } players";
       }
    }
 }

@@ -13,6 +13,11 @@ namespace Parchis
          Status = TokenStatus.Home;
       }
 
+      public bool AtHome()
+      {
+         return (Status == TokenStatus.Home);
+      }
+
       public override string ToString()
       {
          return

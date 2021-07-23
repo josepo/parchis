@@ -53,5 +53,17 @@ namespace Parchis.Tests
 
          Assert.True(token.AtHeaven());
       }
+
+      [Fact]
+      public void MoveFromHomeToStart()
+      {
+         Path path = new Path(1, 10, 3);
+
+         Token token = new Token(Position.Home, path);
+         token.Move(5);
+
+         Assert.True(token.AtBoard());
+         Assert.True(token.At(1));
+      }
    }
 }

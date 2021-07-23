@@ -39,6 +39,12 @@ namespace Parchis
             if (square == End + Steps + 1)
                return Position.Heaven;            
          }
+
+         if (start.AtHome())
+         {
+            if (moves == 5)
+               return Position.OnBoard(Start);
+         }
          
          throw new Exception("Invalid new position!");
       }

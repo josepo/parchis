@@ -6,16 +6,7 @@ namespace Parchis
    {
       static void Main(string[] args)
       {
-         Board board = new Board();
-
-         Game game = new Game
-         (
-            new Players
-            {
-               new Player(Color.Green, board),
-               new Player(Color.Blue, board)
-            }
-         );
+         Game game = GameFactory.For(Color.Green, Color.Blue);
 
          while (!game.End())
          {

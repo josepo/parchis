@@ -7,6 +7,7 @@ namespace Parchis
       public static Position Home = new Position(Board.Section.Home);
       public static Position OnBoard(int square) => new Position(Board.Section.Board, square);
       public static Position OnLadder(int square) => new Position(Board.Section.Ladder, square);
+      public static Position Heaven = new Position(Board.Section.Heaven);
 
       public Board.Section Section { get; }
       public int Square { get; }
@@ -24,5 +25,11 @@ namespace Parchis
          Section = section;
          Square = square;
       }
+
+      public bool AtHome() => Section == Board.Section.Home;
+      public bool AtHeaven() => Section == Board.Section.Heaven;
+      public bool AtBoard() => Section == Board.Section.Board;
+      public bool AtLadder() => Section == Board.Section.Ladder;
+      public bool At(int square) => Square == square;
    }
 }

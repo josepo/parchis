@@ -14,34 +14,15 @@ namespace Parchis
          Path = path ?? throw new ArgumentNullException(nameof(path));
       }
 
-      public bool AtHome()
-      {
-         return (Position.Section == Board.Section.Home);
-      }
-
-      public bool AtBoard()
-      {
-         return (Position.Section == Board.Section.Board);
-      }
-
-      public bool AtLadder()
-      {
-         return (Position.Section == Board.Section.Ladder);
-      }
-
-      public bool At(int square)
-      {
-         return (Position.Square == square);
-      }
+      public bool AtHome() => Position.AtHome();
+      public bool AtBoard() => Position.AtBoard();
+      public bool AtLadder() => Position.AtLadder();
+      public bool AtHeaven() => Position.AtHeaven();
+      public bool At(int square) => Position.At(square);
 
       public void Move(int moves)
       {
-         int end = Path.End;
-         int square = Position.Square + moves;
-
-         Position = (square <= end) ?
-            Position.OnBoard(square) : 
-            Position.OnLadder(square - end);
+         Position = Path.PositionFor(Position, moves);
       }
 
       public override string ToString()

@@ -29,5 +29,29 @@ namespace Parchis.Tests
          Assert.True(token.AtLadder());
          Assert.True(token.At(2));
       }
+
+      [Fact]
+      public void MoveFromBoardToHeaven()
+      {
+         Position start = Position.OnBoard(8);
+         Path path = new Path(1, 10, 3);
+
+         Token token = new Token(start, path);
+         token.Move(6);
+
+         Assert.True(token.AtHeaven());
+      }
+
+      [Fact]
+      public void MoveFromLadderToHeaven()
+      {
+         Position start = Position.OnLadder(3);
+         Path path = new Path(1, 10, 3);
+
+         Token token = new Token(start, path);
+         token.Move(1);
+
+         Assert.True(token.AtHeaven());
+      }
    }
 }

@@ -1,3 +1,5 @@
+using System;
+
 namespace Parchis
 {
    public class Path
@@ -11,6 +13,34 @@ namespace Parchis
          Start = start;
          End = end;
          Steps = steps;
+      }
+
+      public Position PositionFor(Position start, int moves)
+      {
+         int square = start.Square + moves;
+
+         if (start.AtLadder())
+         {
+            if (square <= Steps)
+               return Position.OnLadder(square);
+
+            if (square == Steps + 1)
+               return Position.Heaven;
+         }
+
+         if (start.AtBoard())
+         {
+            if (square <= End)
+               return Position.OnBoard(square);
+
+            if (square <= End + Steps)
+               return Position.OnLadder(square - End);
+
+            if (square == End + Steps + 1)
+               return Position.Heaven;            
+         }
+         
+         throw new Exception("Invalid new position!");
       }
    }
 }

@@ -1,21 +1,38 @@
+using System;
 using System.Text;
 
 namespace Parchis
 {
    internal class Token
    {
-      internal enum TokenStatus { Home, Board, Heaven };
+      public Position Position { get; }
 
-      private TokenStatus Status { get; set; }
+      public Token() : this (Position.Home) {}
 
-      public Token()
+      public Token(Position position)
       {
-         Status = TokenStatus.Home;
+         Position = position ?? throw new ArgumentNullException(nameof(position));
       }
 
       public bool AtHome()
       {
-         return (Status == TokenStatus.Home);
+         return (Position.Section == Board.Section.Home);
+      }
+
+      public bool AtBoard()
+      {
+         return (Position.Section == Board.Section.Board);
+      }
+
+      public bool At(int square)
+      {
+         return (Position.Square == square);
+      }
+
+      public Token Move(int moves)
+      {
+         return new Token(
+            new Position(Board.Section.Board, Position.Square + moves));
       }
 
       public override string ToString()
@@ -23,7 +40,7 @@ namespace Parchis
          return
             new StringBuilder()
                .Append("Token ")
-               .Append($"at { Status } ")
+               .Append($"at { Position.Section } ")
                .ToString();
       }
    }

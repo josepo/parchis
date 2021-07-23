@@ -6,9 +6,9 @@ namespace Parchis
 {
    public class Player : ICloneable
    {
-      public Color Color { get; private set; }
+      public Color Color { get; }
 
-      private List<Token> Tokens { get; set; }
+      private List<Token> Tokens { get; }
 
       public Player(Color color)
       {

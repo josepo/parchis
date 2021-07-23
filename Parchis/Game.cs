@@ -5,12 +5,10 @@ namespace Parchis
 {
    public class Game
    {
-      private Board Board { get; set; }
       private Players Players { get; set; }
 
-      public Game(Board board, Players players)
+      public Game(Players players)
       {
-         Board = board ?? throw new ArgumentNullException(nameof(board));
          Players = players ?? throw new ArgumentNullException(nameof(players));
       }
 

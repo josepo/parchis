@@ -19,7 +19,7 @@ namespace Parchis
          if (_players.Any(p => p.Color == player.Color))
             throw new System.Exception("All players should have a unique color.");
 
-         _players.Add(player.Clone() as Player);
+         _players.Add(player.Clone());
       }
 
       public override string ToString()

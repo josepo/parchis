@@ -8,13 +8,15 @@ namespace Parchis.Tests
       [Fact]
       public void NoRepeatedColorsAllowed()
       {
+         Board board = new Board();
+
          Assert.Throws<Exception>(() =>
          {
             new Players
             {
-               new Player(Color.Yellow),
-               new Player(Color.Green),
-               new Player(Color.Yellow)
+               new Player(Color.Yellow, board),
+               new Player(Color.Green, board),
+               new Player(Color.Yellow, board)
             };
          });
       }

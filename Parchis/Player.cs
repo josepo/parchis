@@ -4,25 +4,27 @@ using System.Text;
 
 namespace Parchis
 {
-   public class Player : ICloneable
+   public class Player
    {
       public Color Color { get; }
+      private Board Board { get; }
 
       private List<Token> Tokens { get; }
 
-      public Player(Color color)
+      public Player(Color color, Board board)
       {
          Color = color;
+         Board = board ?? throw new ArgumentNullException(nameof(board));
 
          Tokens = new List<Token>
          {
-            new Token()
+            new Token(Position.Home, Board.PathFor(Color))
          };
       }
 
-      public object Clone()
+      public Player Clone()
       {
-         return new Player(Color);
+         return new Player(Color, Board);
       }
 
       public override string ToString()

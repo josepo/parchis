@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Xunit;
 
 namespace Parchis.Tests
@@ -7,7 +8,11 @@ namespace Parchis.Tests
       [Fact]
       public void Clone()
       {
-         Player player = new Player(Color.Blue, new Board());
+         Player player = new Player(Color.Blue, new List<Token>
+         {
+            new Token(Position.Home, new Board().PathFor(Color.Blue))
+         });
+
          Player clone = player.Clone();
 
          Assert.Equal(player.Color, clone.Color);

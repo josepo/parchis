@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Parchis
 {
    public static class GameFactory
@@ -8,7 +10,10 @@ namespace Parchis
          Players players = new Players();
          
          foreach(Color color in colors)
-            players.Add(new Player(color, board));
+            players.Add(
+               new Player(color, new List<Token> {
+                  new Token(Position.Home, board.PathFor(color))
+               }));
 
          return new Game(players);
       }

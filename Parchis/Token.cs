@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Parchis
 {
-   internal class Token
+   public class Token
    {
       public Position Position { get; private set;}
       private Path Path { get; }

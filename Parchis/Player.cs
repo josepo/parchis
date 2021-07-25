@@ -7,24 +7,17 @@ namespace Parchis
    public class Player
    {
       public Color Color { get; }
-      private Board Board { get; }
-
       private List<Token> Tokens { get; }
 
-      public Player(Color color, Board board)
+      public Player(Color color, List<Token> tokens)
       {
          Color = color;
-         Board = board ?? throw new ArgumentNullException(nameof(board));
-
-         Tokens = new List<Token>
-         {
-            new Token(Position.Home, Board.PathFor(Color))
-         };
+         Tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
       }
 
       public Player Clone()
       {
-         return new Player(Color, Board);
+         return new Player(Color, Tokens);
       }
 
       public override string ToString()

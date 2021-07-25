@@ -8,20 +8,15 @@ namespace Parchis
 
       private Dictionary<Color, Path> Paths = new Dictionary<Color, Path>
       {
-         { Color.Yellow, new Path(4, 68, 7) },
-         { Color.Red, new Path(38, 34, 7) },
-         { Color.Blue, new Path(21, 17, 7) },
-         { Color.Green, new Path(55, 51, 7) }
+         { Color.Yellow, new Path(5, 68, 7) },
+         { Color.Red, new Path(39, 34, 7) },
+         { Color.Blue, new Path(22, 17, 7) },
+         { Color.Green, new Path(56, 51, 7) }
       };
 
-      public Path PathFor(Color color)
+      public Position NextPosition(Position position, int moves, Color color)
       {
-         Path path;
-
-         if (!Paths.TryGetValue(color, out path))
-            throw new System.Exception($"No path for color { color }");
-
-         return path;
+         return Paths[color].NextPosition(position, moves);
       }
    }
 }

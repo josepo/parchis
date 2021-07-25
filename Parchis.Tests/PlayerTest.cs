@@ -10,7 +10,7 @@ namespace Parchis.Tests
       {
          Player player = new Player(Color.Blue, new List<Token>
          {
-            new Token(Position.Home, new Board().PathFor(Color.Blue))
+            new Token(Position.Home)
          });
 
          Player clone = player.Clone();

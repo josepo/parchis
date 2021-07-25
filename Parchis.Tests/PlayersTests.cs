@@ -16,15 +16,15 @@ namespace Parchis.Tests
             new Players
             {
                new Player(Color.Yellow, new List<Token> {
-                  new Token(Position.Home, board.PathFor(Color.Yellow))
+                  new Token(Position.Home)
                }),
 
                new Player(Color.Green, new List<Token> {
-                  new Token(Position.Home, board.PathFor(Color.Green))
+                  new Token(Position.Home)
                }),
 
                new Player(Color.Yellow, new List<Token> {
-                  new Token(Position.Home, board.PathFor(Color.Yellow))
+                  new Token(Position.Home)
                }),
             };
          });

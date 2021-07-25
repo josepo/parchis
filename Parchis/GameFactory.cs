@@ -12,7 +12,7 @@ namespace Parchis
          foreach(Color color in colors)
             players.Add(
                new Player(color, new List<Token> {
-                  new Token(Position.Home, board.PathFor(color))
+                  new Token(Position.Home)
                }));
 
          return new Game(players);

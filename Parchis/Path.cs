@@ -2,7 +2,7 @@ using System;
 
 namespace Parchis
 {
-   public class Path
+   internal class Path
    {
       public int Start { get; }
       public int End { get; }
@@ -15,7 +15,7 @@ namespace Parchis
          Steps = steps;
       }
 
-      public Position PositionFor(Position start, int moves)
+      public Position NextPosition(Position start, int moves)
       {
          int square = start.Square + moves;
 

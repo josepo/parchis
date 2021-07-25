@@ -29,7 +29,8 @@ namespace Parchis
       public bool AtHome() => Section == Board.Section.Home;
       public bool AtHeaven() => Section == Board.Section.Heaven;
       public bool AtBoard() => Section == Board.Section.Board;
+      public bool AtBoard(int square) => (Section == Board.Section.Board) && (Square == square);
       public bool AtLadder() => Section == Board.Section.Ladder;
-      public bool At(int square) => Square == square;
+      public bool AtLadder(int square) => (Section == Board.Section.Ladder) && (Square == square);
    }
 }

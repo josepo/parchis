@@ -1,4 +1,6 @@
+
 using System;
+using System.Linq;
 using System.Text;
 
 namespace Parchis
@@ -19,6 +21,7 @@ namespace Parchis
 
       public void Move()
       {
+         Players.First().Move(1);
       }
 
       public override string ToString()

@@ -13,7 +13,7 @@ namespace Parchis
             players.Add(
                new Player(color, new List<Token> {
                   new Token(Position.Home)
-               }));
+               }, board));
 
          return new Game(players);
       }

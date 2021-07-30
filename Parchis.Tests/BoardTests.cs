@@ -16,6 +16,17 @@ namespace Parchis.Tests
       }
 
       [Fact]
+      public void NextPositionOnBoardPassingBoardEnd()
+      {
+         Board board = new Board();
+
+         Position start = Position.OnBoard(66);
+         Position end = board.NextPosition(start, 5, Color.Green);
+
+         Assert.True(end.AtBoard(3));
+      }
+
+      [Fact]
       public void NextPositionFromBoardToLadder()
       {
          Board board = new Board();

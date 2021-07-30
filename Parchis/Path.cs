@@ -1,56 +1,55 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Parchis
 {
    internal class Path
    {
-      public static Path Yellow = new Path(4, 68);
-      public static Path Red = new Path(38, 34);
-      public static Path Blue = new Path(21, 17);
-      public static Path Green = new Path(55, 51);
+      private List<Position> Positions = new List<Position>();
 
-      public int Start { get; }
-      public int End { get; }
-      public int Steps { get; } = 7;
-
-      public Path(int start, int end)
+      public Path(int start, int end, int boardEnd)
       {
-         Start = start;
-         End = end;
+         Positions.Add(Position.Home);
+
+         for (int i = start; i <= boardEnd; i++)
+            Positions.Add(Position.OnBoard(i));
+
+         if (end != boardEnd)
+            for (int i = 1; i <= end; i++)
+               Positions.Add(Position.OnBoard(i));
+
+         for (int i = 1; i <= 7; i++)
+            Positions.Add(Position.OnLadder(i));
+
+         Positions.Add(Position.Heaven);
       }
 
       public Position NextPosition(Position start, int moves)
       {
-         int square = start.Square + moves;
+         if (start.AtHeaven())
+            throw new Exception($"Cannot move from heaven");
 
-         if (start.AtLadder())
-         {
-            if (square <= Steps)
-               return Position.OnLadder(square);
+         int current =
+            Positions.FindIndex(p => p.Section == start.Section && p.Square == start.Square);
 
-            if (square == Steps + 1)
-               return Position.Heaven;
-         }
+         if (current == -1)
+            throw new Exception($"Position { start } not in path { this }");
 
-         if (start.AtBoard())
-         {
-            if (square <= End)
-               return Position.OnBoard(square);
-
-            if (square <= End + Steps)
-               return Position.OnLadder(square - End);
-
-            if (square == End + Steps + 1)
-               return Position.Heaven;            
-         }
-
-         if (start.AtHome())
+         if (current == 0)
          {
             if (moves == 5)
-               return Position.OnBoard(Start);
+               return Positions[1];
+
+            throw new Exception($"Cannot move { moves } moves from home");
          }
-         
-         throw new Exception("Invalid new position!");
+
+         int next = current + moves;
+
+         if (next >= Positions.Count)
+            throw new Exception($"Cannot move { moves } moves from { start }");
+
+         return Positions[next];
       }
    }
 }

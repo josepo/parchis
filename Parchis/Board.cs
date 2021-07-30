@@ -4,14 +4,17 @@ namespace Parchis
 {
    public class Board
    {
+      public int Start = 1;
+      public int End = 68;
+
       public enum Section { Home, Board, Ladder, Heaven };
 
       private Dictionary<Color, Path> Paths = new Dictionary<Color, Path>
       {
-         { Color.Yellow, new Path(5, 68, 7) },
-         { Color.Red, new Path(39, 34, 7) },
-         { Color.Blue, new Path(22, 17, 7) },
-         { Color.Green, new Path(56, 51, 7) }
+         { Color.Yellow, Path.Yellow },
+         { Color.Red, Path.Red },
+         { Color.Blue, Path.Blue },
+         { Color.Green, Path.Green }
       };
 
       public Position NextPosition(Position position, int moves, Color color)

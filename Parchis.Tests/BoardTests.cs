@@ -45,7 +45,7 @@ namespace Parchis.Tests
          Position start = Position.Home;
          Position end = board.NextPosition(start, 5, Color.Yellow);
 
-         Assert.True(end.AtBoard(5));
+         Assert.True(end.AtBoard(4));
       }
    }
 }

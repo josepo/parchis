@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 
 namespace Parchis
 {
@@ -12,13 +11,6 @@ namespace Parchis
          Position = position ?? throw new ArgumentNullException(nameof(position));
       }
 
-      public override string ToString()
-      {
-         return
-            new StringBuilder()
-               .Append("Token ")
-               .Append($"at { Position.Section } ")
-               .ToString();
-      }
+      public override string ToString() => $"Token at { Position.ToString() } ";
    }
 }

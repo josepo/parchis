@@ -25,6 +25,11 @@ namespace Parchis
          token.Position = Board.NextPosition(token.Position, moves, Color);
       }
 
+      public bool Won()
+      {
+         return Tokens.All(t => t.Position.AtHeaven());
+      }
+
       public Player Clone()
       {
          return new Player(Color, Tokens, Board);

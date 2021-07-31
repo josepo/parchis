@@ -8,8 +8,14 @@ namespace Parchis
       {
          Game game = GameFactory.For(Color.Green, Color.Blue);
 
+         Console.Clear();
+         Console.WriteLine(game);
+
          while (!game.End())
          {
+            Console.ReadKey(false);
+            Console.Clear();
+
             game.Move();
 
             Console.WriteLine(game);

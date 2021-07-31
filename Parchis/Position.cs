@@ -32,5 +32,15 @@ namespace Parchis
       public bool AtBoard(int square) => (Section == Board.Section.Board) && (Square == square);
       public bool AtLadder() => Section == Board.Section.Ladder;
       public bool AtLadder(int square) => (Section == Board.Section.Ladder) && (Square == square);
+
+      public override string ToString()
+      {
+         string result = Section.ToString();
+
+         if (AtBoard() || AtLadder())
+            result += $" { Square } ";
+
+         return result;
+      }
    }
 }

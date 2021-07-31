@@ -1,27 +1,28 @@
 
 using System;
-using System.Linq;
 using System.Text;
 
 namespace Parchis
 {
    public class Game
    {
-      private Players Players { get; set; }
+      private Player Current { get; set; }
+      private IPlayers Players { get; set; }
 
-      public Game(Players players)
+      public Game(IPlayers players)
       {
          Players = players ?? throw new ArgumentNullException(nameof(players));
+         Current = Players.GetRandom();
       }
 
       public bool End()
       {
-         return true;
+         return Players.AnyWinner();
       }
 
       public void Move()
       {
-         Players.First().Move(1);
+         Current.Move(5);
       }
 
       public override string ToString()

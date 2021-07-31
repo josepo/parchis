@@ -13,21 +13,43 @@ namespace Parchis.Tests
 
          Assert.Throws<Exception>(() =>
          {
-            new Players
-            {
+            Players players = new Players();
+
+            players.Add(
                new Player(Color.Yellow, new List<Token> {
                   new Token(Position.Home)
-               }, board),
+               }, board));
 
+            players.Add(
                new Player(Color.Green, new List<Token> {
                   new Token(Position.Home)
-               }, board),
+               }, board));
 
+            players.Add(
                new Player(Color.Yellow, new List<Token> {
                   new Token(Position.Home)
-               }, board),
-            };
+               }, board));                              
          });
+      }
+
+      [Fact]
+      public void ThereIsAWinner()
+      {
+         Board board = new Board();
+
+         Player loser = new Player(Color.Yellow, new List<Token> {
+            new Token(Position.OnLadder(3))
+         }, board);
+
+         Player winner = new Player(Color.Blue, new List<Token> {
+            new Token(Position.Heaven)
+         }, board);
+
+         IPlayers players = new Players();
+         players.Add(loser);
+         players.Add(winner);
+
+         Assert.True(players.AnyWinner());
       }
    }
 }

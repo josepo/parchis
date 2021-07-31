@@ -1,11 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Parchis
 {
-   public class Players : IEnumerable<Player>
+   public interface IPlayers
+   {
+      void Add(Player player);
+      bool AnyWinner();
+
+      Player GetRandom();
+   }
+
+   internal class Players : IPlayers
    {
       private List<Player> _players;
 
@@ -22,6 +29,16 @@ namespace Parchis
          _players.Add(player.Clone());
       }
 
+      public bool AnyWinner()
+      {
+         return _players.Any(p => p.Won());
+      }
+
+      public Player GetRandom()
+      {
+         return _players.First();
+      }
+
       public override string ToString()
       {
          StringBuilder builder = new StringBuilder();
@@ -30,16 +47,6 @@ namespace Parchis
             builder = builder.AppendLine(player.ToString());
 
          return builder.ToString();
-      }
-
-      public IEnumerator<Player> GetEnumerator()
-      {
-         return _players.GetEnumerator();
-      }
-
-      IEnumerator IEnumerable.GetEnumerator()
-      {
-         return GetEnumerator();
       }
    }
 }

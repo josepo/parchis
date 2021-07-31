@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Xunit;
 
 namespace Parchis.Tests
@@ -8,10 +7,7 @@ namespace Parchis.Tests
       [Fact]
       public void Clone()
       {
-         Player player = new Player(
-            Color.Blue,
-            new List<Token> { new Token(Position.Home) },
-            new Board());
+         Player player = PlayerBuilder.Blue().Token(Position.Home);
 
          Player clone = player.Clone();
 
@@ -23,11 +19,7 @@ namespace Parchis.Tests
       public void FirstTokenIsMoved()
       {
          Token token = new Token(Position.OnBoard(7));
-
-         Player player = new Player(
-            Color.Blue,
-            new List<Token> { token },
-            new Board());
+         Player player = PlayerBuilder.Blue().Token(token);
 
          player.Move(3);
 

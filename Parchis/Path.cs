@@ -38,18 +38,12 @@ namespace Parchis
 
          if (current == 0)
          {
-            if (moves == 5)
-               return Positions[1];
-
-            throw new Exception($"Cannot move { moves } moves from home");
+            return (moves == 5) ? Positions[1] : Positions[0];
          }
 
          int next = current + moves;
 
-         if (next >= Positions.Count)
-            throw new Exception($"Cannot move { moves } moves from { start }");
-
-         return Positions[next];
+         return (next < Positions.Count) ? Positions[next] : Positions[current];
       }
    }
 }

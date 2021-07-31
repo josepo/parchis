@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Parchis
       void Add(Player player);
       bool AnyWinner();
 
+      Color Winner();
       Player GetRandom();
    }
 
@@ -32,6 +34,14 @@ namespace Parchis
       public bool AnyWinner()
       {
          return _players.Any(p => p.Won());
+      }
+
+      public Color Winner()
+      {
+         if (!AnyWinner())
+            throw new Exception("No winner yet!");
+
+         return _players.First(p => p.Won()).Color;
       }
 
       public Player GetRandom()

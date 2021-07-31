@@ -22,7 +22,12 @@ namespace Parchis
 
       public void Move()
       {
-         Current.Move(5);
+         Current.Move();
+      }
+
+      public Color Winner()
+      {
+         return Players.Winner();
       }
 
       public override string ToString()

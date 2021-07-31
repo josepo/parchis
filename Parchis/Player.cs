@@ -10,30 +10,26 @@ namespace Parchis
       public Color Color { get; }
       private List<Token> Tokens { get; }
       private Board Board { get; }
+      private IDice Dice { get; }
 
-      public Player(Color color, List<Token> tokens, Board board)
+      public Player(Color color, List<Token> tokens, Board board, IDice dice)
       {
          Color = color;
          Tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
          Board = board ?? throw new ArgumentNullException(nameof(board));
+         Dice = dice ?? throw new ArgumentNullException(nameof(dice));
       }
 
-      public void Move(int moves)
+      public void Move()
       {
          Token token = Tokens.First();
+         int moves = Dice.Roll();
 
          token.Position = Board.NextPosition(token.Position, moves, Color);
       }
 
-      public bool Won()
-      {
-         return Tokens.All(t => t.Position.AtHeaven());
-      }
-
-      public Player Clone()
-      {
-         return new Player(Color, Tokens, Board);
-      }
+      public bool Won() => Tokens.All(t => t.Position.AtHeaven());
+      public Player Clone() => new Player(Color, Tokens, Board, Dice);
 
       public override string ToString()
       {

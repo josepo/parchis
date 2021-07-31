@@ -21,7 +21,7 @@ namespace Parchis
             Console.WriteLine(game);
          }
 
-         Console.WriteLine(game);
+         Console.WriteLine($"{ game.Winner() } wins the game");
       }
    }
 }

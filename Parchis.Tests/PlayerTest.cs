@@ -1,3 +1,4 @@
+using NSubstitute;
 using Xunit;
 
 namespace Parchis.Tests
@@ -7,8 +8,7 @@ namespace Parchis.Tests
       [Fact]
       public void Clone()
       {
-         Player player = PlayerBuilder.Blue().Token(Position.Home);
-
+         Player player = PlayerBuilder.Blue();
          Player clone = player.Clone();
 
          Assert.Equal(player.Color, clone.Color);
@@ -19,9 +19,14 @@ namespace Parchis.Tests
       public void FirstTokenIsMoved()
       {
          Token token = new Token(Position.OnBoard(7));
-         Player player = PlayerBuilder.Blue().Token(token);
+         
+         IDice dice = Substitute.For<IDice>();
+         dice.Roll().Returns(3);
 
-         player.Move(3);
+         Player player =
+            PlayerBuilder.Blue().Token(token).Dice(dice);
+
+         player.Move();
 
          Assert.True(token.Position.AtBoard(10));
       }

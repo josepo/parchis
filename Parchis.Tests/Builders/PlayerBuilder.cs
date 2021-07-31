@@ -6,6 +6,7 @@ namespace Parchis.Tests
    {
       private Color _color;
       private List<Token> _tokens = new List<Token>();
+      private IDice _dice = new Dice();
 
       private PlayerBuilder(Color color)
       {
@@ -31,9 +32,14 @@ namespace Parchis.Tests
          return this;
       }
 
-      public static implicit operator Player(PlayerBuilder builder)
+      public PlayerBuilder Dice(IDice dice)
       {
-         return new Player(builder._color, builder._tokens, new Board());
+         _dice = dice;
+
+         return this;
       }
+
+      public static implicit operator Player(PlayerBuilder builder) =>
+         new Player(builder._color, builder._tokens, new Board(), builder._dice);
    }
 }

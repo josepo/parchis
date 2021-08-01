@@ -39,5 +39,34 @@ namespace Parchis.Tests
 
          Assert.Equal(Color.Blue, players.Winner());
       }
+
+      [Fact]
+      public void RedIsNextFromGreen()
+      {
+         Players players = new Players();
+
+         players.Add(PlayerBuilder.Blue());
+         players.Add(PlayerBuilder.Red());
+         players.Add(PlayerBuilder.Green());
+         players.Add(PlayerBuilder.Yellow());
+
+         Player next = players.Next(Color.Green);
+
+         Assert.Equal(Color.Red, next.Color);
+      }
+
+      [Fact]
+      public void YellowIsNextFromRedWhenNoBlue()
+      {
+         Players players = new Players();
+
+         players.Add(PlayerBuilder.Green());
+         players.Add(PlayerBuilder.Red());
+         players.Add(PlayerBuilder.Yellow());
+
+         Player next = players.Next(Color.Red);
+
+         Assert.Equal(Color.Yellow, next.Color);         
+      }
    }
 }

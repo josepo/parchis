@@ -18,6 +18,13 @@ namespace Parchis.Tests
       public static PlayerBuilder Green() => new PlayerBuilder(Color.Green);
       public static PlayerBuilder Red() => new PlayerBuilder(Color.Red);
 
+      public PlayerBuilder Token()
+      {
+         _tokens.Add(new Token(Position.Home));
+
+         return this;
+      }
+
       public PlayerBuilder Token(Position position)
       {
          _tokens.Add(new Token(position));

@@ -6,8 +6,8 @@ namespace Parchis
 {
    public class Game
    {
-      private Player Current { get; set; }
-      private IPlayers Players { get; set; }
+      public Player Current { get; private set; }
+      private IPlayers Players { get; }
 
       public Game(IPlayers players)
       {
@@ -23,6 +23,7 @@ namespace Parchis
       public void Move()
       {
          Current.Move();
+         Current = Players.Next(Current.Color);
       }
 
       public Color Winner()
@@ -35,7 +36,7 @@ namespace Parchis
          return
             new StringBuilder()
                .AppendLine()
-               .AppendLine("Game")
+               .AppendLine($"Game - Player { Current.Color } to play")
                .AppendLine()
                .Append(Players.ToString())
                .ToString();

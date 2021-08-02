@@ -8,10 +8,15 @@ namespace Parchis.Tests
       [Fact]
       public void GameEnds()
       {
-         IPlayers players = Substitute.For<IPlayers>();
-         players.AnyWinner().Returns(true);
+         Board board = new Board(
+            new Token(Color.Blue, Position.Heaven),
+            new Token(Color.Red));
 
-         Game game = new Game(players);
+         IPlayers players = new Players();
+         players.Add(PlayerBuilder.Blue().Board(board));
+         players.Add(PlayerBuilder.Red().Board(board));
+
+         Game game = new Game(board, players);
 
          Assert.True(game.End());
       }
@@ -19,16 +24,20 @@ namespace Parchis.Tests
       [Fact]
       public void TurnChanges()
       {
-         IPlayers players = Substitute.For<IPlayers>();
-         players.GetRandom().Returns(PlayerBuilder.Blue().Token());
-         players.Next(Color.Blue).Returns(PlayerBuilder.Red().Token());
+         Board board = new Board(
+            new Token(Color.Blue),
+            new Token(Color.Red));
 
-         Game game = new Game(players);
+         IPlayers players = new Players();
+         players.Add(PlayerBuilder.Blue().Board(board));
+         players.Add(PlayerBuilder.Red().Board(board));
+
+         Game game = new Game(board, players);
+         Player first = game.Current;
+
          game.Move();
 
-         Player current = game.Current;
-
-         Assert.Equal(Color.Red, current.Color);
+         Assert.NotEqual(first.Color, game.Current.Color);
       }
    }
 }

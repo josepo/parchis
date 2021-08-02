@@ -1,13 +1,24 @@
+using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Parchis
 {
-   public class Board
+   public interface IBoard
+   {
+      IEnumerable<Token> Candidates(Color color, int moves);
+      bool AnyWinner();
+      Color Winner();
+      Position NextPosition(Token token, int moves);
+   }
+
+   internal class Board : IBoard
    {
       private const int Start = 1;
       private const int End = 68;
 
-      public enum Section { Home, Board, Ladder, Heaven };
+      private IEnumerable<Token> Tokens { get; }
 
       private Dictionary<Color, Path> Paths = new Dictionary<Color, Path>
       {
@@ -17,9 +28,49 @@ namespace Parchis
          { Color.Green, new Path(55, 51, End) }
       };
 
-      public Position NextPosition(Position position, int moves, Color color)
+      public Board(params Token[] tokens)
       {
-         return Paths[color].NextPosition(position, moves);
+         Tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
+      }
+
+      public IEnumerable<Token> Candidates(Color color, int moves)
+      {
+         return Tokens.Where(t => t.Color == color);
+      }
+
+      public bool AnyWinner()
+      {
+         return Tokens
+            .GroupBy(t => t.Color)
+            .Any(g => g.All(t => t.Position.AtHeaven()));
+      }
+
+      public Color Winner()
+      {
+         return Tokens
+            .GroupBy(t => t.Color)
+            .Single(g => g.All(t => t.Position.AtHeaven()))
+            .First()
+            .Color;
+      }
+
+      public Position NextPosition(Token token, int moves)
+      {
+         if (!Tokens.Contains(token))
+            throw new Exception($"{ token } not in board!");
+
+         return Paths[token.Color].NextPosition(token.Position, moves);
+      }
+
+      public override string ToString()
+      {
+         StringBuilder builder =
+            new StringBuilder().AppendLine("Board ");
+
+         foreach(Token token in Tokens)
+            builder = builder.AppendLine($"  { token }");
+
+         return builder.ToString();
       }
    }
 }

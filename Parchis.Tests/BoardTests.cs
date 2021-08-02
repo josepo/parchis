@@ -7,10 +7,10 @@ namespace Parchis.Tests
       [Fact]
       public void NextPositionOnBoard()
       {
-         Board board = new Board();
+         Token token = new Token(Color.Yellow, Position.OnBoard(7));
+         Board board = new Board(token);
 
-         Position start = Position.OnBoard(7);
-         Position end = board.NextPosition(start, 2, Color.Yellow);
+         Position end = board.NextPosition(token, 2);
 
          Assert.True(end.AtBoard(9));
       }
@@ -18,10 +18,10 @@ namespace Parchis.Tests
       [Fact]
       public void NextPositionOnBoardPassingBoardEnd()
       {
-         Board board = new Board();
+         Token token = new Token(Color.Green, Position.OnBoard(66));
+         Board board = new Board(token);
 
-         Position start = Position.OnBoard(66);
-         Position end = board.NextPosition(start, 5, Color.Green);
+         Position end = board.NextPosition(token, 5);
 
          Assert.True(end.AtBoard(3));
       }
@@ -29,10 +29,10 @@ namespace Parchis.Tests
       [Fact]
       public void NextPositionFromBoardToLadder()
       {
-         Board board = new Board();
+         Token token = new Token(Color.Yellow, Position.OnBoard(66));
+         Board board = new Board(token);
 
-         Position start = Position.OnBoard(66);
-         Position end = board.NextPosition(start, 4, Color.Yellow);
+         Position end = board.NextPosition(token, 4);
 
          Assert.True(end.AtLadder(2));
       }
@@ -40,10 +40,10 @@ namespace Parchis.Tests
       [Fact]
       public void NextPositionFromLadderToHeaven()
       {
-         Board board = new Board();
+         Token token = new Token(Color.Yellow, Position.OnLadder(3));
+         Board board = new Board(token);
 
-         Position start = Position.OnLadder(3);
-         Position end = board.NextPosition(start, 5, Color.Yellow);
+         Position end = board.NextPosition(token, 5);
 
          Assert.True(end.AtHeaven());
       }
@@ -51,12 +51,34 @@ namespace Parchis.Tests
       [Fact]
       public void NextPositionFromHomeToStart()
       {
-         Board board = new Board();
+         Token token = new Token(Color.Yellow);
+         Board board = new Board(token);
 
-         Position start = Position.Home;
-         Position end = board.NextPosition(start, 5, Color.Yellow);
+         Position end = board.NextPosition(token, 5);
 
          Assert.True(end.AtBoard(4));
       }
+
+      [Fact]
+      public void ThereIsAWinner()
+      {
+         Board board = new Board(
+            new Token(Color.Red, Position.OnLadder(3)),
+            new Token(Color.Blue, Position.Heaven)
+         );
+
+         Assert.True(board.AnyWinner());
+      }
+
+      [Fact]
+      public void Winner()
+      {
+         Board board = new Board(
+            new Token(Color.Red, Position.OnLadder(3)),
+            new Token(Color.Blue, Position.Heaven)
+         );
+
+         Assert.Equal(Color.Blue, board.Winner());
+      }      
    }
 }

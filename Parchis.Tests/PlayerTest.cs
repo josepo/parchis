@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NSubstitute;
 using Xunit;
 
@@ -18,13 +19,17 @@ namespace Parchis.Tests
       [Fact]
       public void FirstTokenIsMoved()
       {
-         Token token = new Token(Position.OnBoard(7));
-         
+         Token token = new Token(Color.Blue, Position.OnBoard(7));
+
          IDice dice = Substitute.For<IDice>();
          dice.Roll().Returns(3);
 
+         IBoard board = Substitute.For<IBoard>();
+         board.Candidates(Color.Blue, 3).Returns(new List<Token> { token });
+         board.NextPosition(token, 3).Returns(Position.OnBoard(10));
+
          Player player =
-            PlayerBuilder.Blue().Token(token).Dice(dice);
+            PlayerBuilder.Blue().Dice(dice).Board(board);
 
          player.Move();
 

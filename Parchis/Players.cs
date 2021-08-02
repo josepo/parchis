@@ -8,8 +8,6 @@ namespace Parchis
    public interface IPlayers
    {
       void Add(Player player);
-      bool AnyWinner();
-      Color Winner();
       Player GetRandom();
       Player Next(Color color);
    }
@@ -29,19 +27,6 @@ namespace Parchis
             throw new System.Exception("All players should have a unique color.");
 
          _players.Add(player.Clone());
-      }
-
-      public bool AnyWinner()
-      {
-         return _players.Any(p => p.Won());
-      }
-
-      public Color Winner()
-      {
-         if (!AnyWinner())
-            throw new Exception("No winner yet!");
-
-         return _players.First(p => p.Won()).Color;
       }
 
       public Player GetRandom()

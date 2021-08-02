@@ -1,4 +1,3 @@
-
 using System;
 using System.Text;
 
@@ -6,19 +5,19 @@ namespace Parchis
 {
    public class Game
    {
-      public Player Current { get; private set; }
+      private IBoard Board { get; }
       private IPlayers Players { get; }
+      public Player Current { get; private set; }
 
-      public Game(IPlayers players)
+      public Game(IBoard board, IPlayers players)
       {
+         Board = board ?? throw new ArgumentNullException(nameof(board));
          Players = players ?? throw new ArgumentNullException(nameof(players));
          Current = Players.GetRandom();
       }
 
-      public bool End()
-      {
-         return Players.AnyWinner();
-      }
+      public bool End() => Board.AnyWinner();
+      public Color Winner() => Board.Winner();
 
       public void Move()
       {
@@ -26,19 +25,15 @@ namespace Parchis
          Current = Players.Next(Current.Color);
       }
 
-      public Color Winner()
-      {
-         return Players.Winner();
-      }
-
       public override string ToString()
       {
          return
             new StringBuilder()
                .AppendLine()
-               .AppendLine($"Game - Player { Current.Color } to play")
+               .AppendLine("Game")
+               .AppendLine($"  { Current.Color } to play")
                .AppendLine()
-               .Append(Players.ToString())
+               .Append(Board.ToString())
                .ToString();
       }
    }

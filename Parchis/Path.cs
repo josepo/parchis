@@ -38,12 +38,18 @@ namespace Parchis
 
          if (current == 0)
          {
-            return (moves == 5) ? Positions[1] : Positions[0];
+            if (moves == 5)
+               return Positions[1];
+
+            return null;
          }
 
          int next = current + moves;
 
-         return (next < Positions.Count) ? Positions[next] : Positions[current];
+         if (next < Positions.Count)
+            return Positions[next];
+
+         return null;
       }
    }
 }

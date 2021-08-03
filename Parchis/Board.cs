@@ -7,10 +7,9 @@ namespace Parchis
 {
    public interface IBoard
    {
-      IEnumerable<Token> Candidates(Color color, int moves);
+      IEnumerable<Move> Candidates(Color color, int moves);
       bool AnyWinner();
       Color Winner();
-      Position NextPosition(Token token, int moves);
    }
 
    internal class Board : IBoard
@@ -33,10 +32,32 @@ namespace Parchis
          Tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
       }
 
-      public IEnumerable<Token> Candidates(Color color, int moves)
+      public IEnumerable<Move> Candidates(Color color, int moves)
       {
-         return Tokens.Where(t => t.Color == color);
+         List<Move> candidates = new List<Move>();
+         IEnumerable<Token> tokens = Tokens.Where(t => t.Color == color);
+
+         Token atHome = tokens.FirstOrDefault(t => t.Position.AtHome());
+
+         if ((atHome != null) && (moves == 5))
+         {
+            candidates.Add(new Move(atHome, NextPosition(atHome, moves)));
+            return candidates;
+         }
+
+         foreach (Token token in tokens)
+         {
+            Position next = NextPosition(token, moves);
+
+            if (next != null)
+               candidates.Add(new Move(token, next));
+         }
+
+         return candidates;
       }
+
+      private Position NextPosition(Token token, int moves) =>
+         Paths[token.Color].NextPosition(token.Position, moves);
 
       public bool AnyWinner()
       {
@@ -52,14 +73,6 @@ namespace Parchis
             .Single(g => g.All(t => t.Position.AtHeaven()))
             .First()
             .Color;
-      }
-
-      public Position NextPosition(Token token, int moves)
-      {
-         if (!Tokens.Contains(token))
-            throw new Exception($"{ token } not in board!");
-
-         return Paths[token.Color].NextPosition(token.Position, moves);
       }
 
       public override string ToString()

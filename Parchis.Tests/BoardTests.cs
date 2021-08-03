@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Parchis.Tests
@@ -5,58 +7,67 @@ namespace Parchis.Tests
    public class BoardTests
    {
       [Fact]
-      public void NextPositionOnBoard()
+      public void CandidateOnBoard()
       {
-         Token token = new Token(Color.Yellow, Position.OnBoard(7));
-         Board board = new Board(token);
+         Board board = new Board(
+            new Token(Color.Yellow, Position.OnBoard(7)));
 
-         Position end = board.NextPosition(token, 2);
+         Move candidate = board.Candidates(Color.Yellow, 2).Single();
 
-         Assert.True(end.AtBoard(9));
+         Assert.Equal(Color.Yellow, candidate.Token.Color);
+         Assert.True(candidate.Destination.AtBoard(9));
       }
 
       [Fact]
-      public void NextPositionOnBoardPassingBoardEnd()
+      public void CandidateOnBoardPassingBoardEnd()
       {
-         Token token = new Token(Color.Green, Position.OnBoard(66));
-         Board board = new Board(token);
+         Board board = new Board(
+            new Token(Color.Green, Position.OnBoard(66)));
 
-         Position end = board.NextPosition(token, 5);
+         Move candidate = board.Candidates(Color.Green, 5).Single();
 
-         Assert.True(end.AtBoard(3));
+         Assert.Equal(Color.Green, candidate.Token.Color);
+         Assert.True(candidate.Destination.AtBoard(3));
       }
 
       [Fact]
-      public void NextPositionFromBoardToLadder()
+      public void CandidateFromBoardToLadder()
       {
-         Token token = new Token(Color.Yellow, Position.OnBoard(66));
-         Board board = new Board(token);
+         Board board = new Board(
+            new Token(Color.Yellow, Position.OnBoard(66)));
 
-         Position end = board.NextPosition(token, 4);
+         Move candidate = board.Candidates(Color.Yellow, 4).Single();
 
-         Assert.True(end.AtLadder(2));
+         Assert.Equal(Color.Yellow, candidate.Token.Color);
+         Assert.True(candidate.Destination.AtLadder(2));
       }
 
       [Fact]
-      public void NextPositionFromLadderToHeaven()
+      public void CandidateFromLadderToHeaven()
       {
-         Token token = new Token(Color.Yellow, Position.OnLadder(3));
-         Board board = new Board(token);
+         Board board = new Board(
+            new Token(Color.Yellow, Position.OnLadder(3)));
 
-         Position end = board.NextPosition(token, 5);
+         Move candidate = board.Candidates(Color.Yellow, 5).Single();
 
-         Assert.True(end.AtHeaven());
+         Assert.Equal(Color.Yellow, candidate.Token.Color);
+         Assert.True(candidate.Destination.AtHeaven());
       }
 
       [Fact]
-      public void NextPositionFromHomeToStart()
+      public void OneCandidateOnlyWhenTokenAtHomeAndDiceRollsFive()
       {
-         Token token = new Token(Color.Yellow);
-         Board board = new Board(token);
+         Board board = new Board(
+            new Token(Color.Red, Position.OnBoard(25)),
+            new Token(Color.Blue, Position.OnBoard(12)),
+            new Token(Color.Blue)
+         );
 
-         Position end = board.NextPosition(token, 5);
+         IEnumerable<Move> moves = board.Candidates(Color.Blue, 5);
+         Move move = moves.Single();
 
-         Assert.True(end.AtBoard(4));
+         Assert.Equal(Color.Blue, move.Token.Color);
+         Assert.True(move.Destination.AtBoard(21));
       }
 
       [Fact]
@@ -79,6 +90,6 @@ namespace Parchis.Tests
          );
 
          Assert.Equal(Color.Blue, board.Winner());
-      }      
+      }
    }
 }

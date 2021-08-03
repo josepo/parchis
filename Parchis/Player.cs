@@ -19,12 +19,15 @@ namespace Parchis
 
       public void Move()
       {
-         int moves = Dice.Roll();
+         IEnumerable<Move> candidates = Board.Candidates(Color, Dice.Roll());
 
-         IEnumerable<Token> candidates = Board.Candidates(Color, moves);
-         Token token = candidates.First();
+         if (candidates.Any())
+         {
+            Move move = candidates.First();
 
-         token.Position = Board.NextPosition(token, moves);
+            Token token = move.Token;
+            token.Position = move.Destination;
+         }
       }
 
       public Player Clone() => new Player(Color, Board, Dice);

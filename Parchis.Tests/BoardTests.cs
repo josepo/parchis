@@ -71,6 +71,20 @@ namespace Parchis.Tests
       }
 
       [Fact]
+      public void TokenAtHeavenIsNeverACandidate()
+      {
+         Board board = new Board(
+            new Token(Color.Blue, Position.OnBoard(12)),
+            new Token(Color.Blue, Position.Heaven)
+         );
+
+         IEnumerable<Move> moves = board.Candidates(Color.Blue, 5);
+         Move move = moves.Single();
+
+         Assert.True(move.Destination.AtBoard(17));
+      }
+
+      [Fact]
       public void ThereIsAWinner()
       {
          Board board = new Board(

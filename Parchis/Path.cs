@@ -28,7 +28,7 @@ namespace Parchis
       public Position NextPosition(Position start, int moves)
       {
          if (start.AtHeaven())
-            throw new Exception($"Cannot move from heaven");
+            return null;
 
          int current =
             Positions.FindIndex(p => p.Section == start.Section && p.Square == start.Square);

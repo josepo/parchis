@@ -10,9 +10,10 @@ namespace Parchis.Tests
       public void CandidateOnBoard()
       {
          Board board = new Board(
+            new Candidates(),
             new Token(Color.Yellow, Position.OnBoard(7)));
 
-         Move candidate = board.Candidates(Color.Yellow, 2).Single();
+         Move candidate = board.GetCandidates(Color.Yellow, 2).Single();
 
          Assert.Equal(Color.Yellow, candidate.Token.Color);
          Assert.True(candidate.Destination.AtBoard(9));
@@ -22,9 +23,10 @@ namespace Parchis.Tests
       public void CandidateOnBoardPassingBoardEnd()
       {
          Board board = new Board(
+            new Candidates(),
             new Token(Color.Green, Position.OnBoard(66)));
 
-         Move candidate = board.Candidates(Color.Green, 5).Single();
+         Move candidate = board.GetCandidates(Color.Green, 5).Single();
 
          Assert.Equal(Color.Green, candidate.Token.Color);
          Assert.True(candidate.Destination.AtBoard(3));
@@ -34,9 +36,10 @@ namespace Parchis.Tests
       public void CandidateFromBoardToLadder()
       {
          Board board = new Board(
+            new Candidates(),
             new Token(Color.Yellow, Position.OnBoard(66)));
 
-         Move candidate = board.Candidates(Color.Yellow, 4).Single();
+         Move candidate = board.GetCandidates(Color.Yellow, 4).Single();
 
          Assert.Equal(Color.Yellow, candidate.Token.Color);
          Assert.True(candidate.Destination.AtLadder(2));
@@ -46,9 +49,10 @@ namespace Parchis.Tests
       public void CandidateFromLadderToHeaven()
       {
          Board board = new Board(
+            new Candidates(),
             new Token(Color.Yellow, Position.OnLadder(3)));
 
-         Move candidate = board.Candidates(Color.Yellow, 5).Single();
+         Move candidate = board.GetCandidates(Color.Yellow, 5).Single();
 
          Assert.Equal(Color.Yellow, candidate.Token.Color);
          Assert.True(candidate.Destination.AtHeaven());
@@ -58,12 +62,13 @@ namespace Parchis.Tests
       public void OneCandidateOnlyWhenTokenAtHomeAndDiceRollsFive()
       {
          Board board = new Board(
+            new Candidates(),
             new Token(Color.Red, Position.OnBoard(25)),
             new Token(Color.Blue, Position.OnBoard(12)),
             new Token(Color.Blue)
          );
 
-         IEnumerable<Move> moves = board.Candidates(Color.Blue, 5);
+         IEnumerable<Move> moves = board.GetCandidates(Color.Blue, 5);
          Move move = moves.Single();
 
          Assert.Equal(Color.Blue, move.Token.Color);
@@ -74,11 +79,12 @@ namespace Parchis.Tests
       public void TokenAtHeavenIsNeverACandidate()
       {
          Board board = new Board(
+            new Candidates(),
             new Token(Color.Blue, Position.OnBoard(12)),
             new Token(Color.Blue, Position.Heaven)
          );
 
-         IEnumerable<Move> moves = board.Candidates(Color.Blue, 5);
+         IEnumerable<Move> moves = board.GetCandidates(Color.Blue, 5);
          Move move = moves.Single();
 
          Assert.True(move.Destination.AtBoard(17));
@@ -88,6 +94,7 @@ namespace Parchis.Tests
       public void ThereIsAWinner()
       {
          Board board = new Board(
+            new Candidates(),
             new Token(Color.Red, Position.OnLadder(3)),
             new Token(Color.Blue, Position.Heaven)
          );
@@ -99,6 +106,7 @@ namespace Parchis.Tests
       public void Winner()
       {
          Board board = new Board(
+            new Candidates(),
             new Token(Color.Red, Position.OnLadder(3)),
             new Token(Color.Blue, Position.Heaven)
          );

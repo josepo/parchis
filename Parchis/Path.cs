@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Parchis
 {
-   internal class Path
+   public class Path
    {
       private List<Position> Positions = new List<Position>();
 

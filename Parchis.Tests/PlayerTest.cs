@@ -25,7 +25,7 @@ namespace Parchis.Tests
          dice.Roll().Returns(3);
 
          IBoard board = Substitute.For<IBoard>();
-         board.Candidates(Color.Blue, 3).Returns(new List<Move> { 
+         board.GetCandidates(Color.Blue, 3).Returns(new List<Move> { 
             new Move(token, Position.OnBoard(10))
          });
 

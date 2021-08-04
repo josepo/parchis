@@ -19,7 +19,7 @@ namespace Parchis
 
       public void Move()
       {
-         IEnumerable<Move> candidates = Board.Candidates(Color, Dice.Roll());
+         IEnumerable<Move> candidates = Board.GetCandidates(Color, Dice.Roll());
 
          if (candidates.Any())
          {

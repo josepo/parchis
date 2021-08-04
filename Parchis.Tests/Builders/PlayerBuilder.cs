@@ -4,7 +4,7 @@ namespace Parchis.Tests
    {
       private Color _color;
       private IDice _dice = new Dice();
-      private IBoard _board = new Board();
+      private IBoard _board = new Board(new Candidates());
 
       private PlayerBuilder(Color color)
       {

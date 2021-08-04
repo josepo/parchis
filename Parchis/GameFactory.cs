@@ -17,7 +17,7 @@ namespace Parchis
             tokens = tokens.Concat(colorTokens);
          }
 
-         Board board = new Board(tokens.ToArray());
+         Board board = new Board(new Candidates(), tokens.ToArray());
 
          Players players = new Players();
          

@@ -1,4 +1,3 @@
-using NSubstitute;
 using Xunit;
 
 namespace Parchis.Tests
@@ -9,6 +8,7 @@ namespace Parchis.Tests
       public void GameEnds()
       {
          Board board = new Board(
+            new Candidates(),
             new Token(Color.Blue, Position.Heaven),
             new Token(Color.Red));
 
@@ -25,6 +25,7 @@ namespace Parchis.Tests
       public void TurnChanges()
       {
          Board board = new Board(
+            new Candidates(),
             new Token(Color.Blue),
             new Token(Color.Red));
 

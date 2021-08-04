@@ -80,8 +80,13 @@ namespace Parchis
          StringBuilder builder =
             new StringBuilder().AppendLine("Board ");
 
-         foreach(Token token in Tokens)
-            builder = builder.AppendLine($"  { token }");
+         foreach(IGrouping<Color, Token> group in Tokens.GroupBy(t => t.Color))
+         {
+            foreach(Token token in group)
+               builder = builder.AppendLine($"  { token }");
+               
+            builder = builder.AppendLine();
+         }
 
          return builder.ToString();
       }

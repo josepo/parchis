@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -5,8 +6,13 @@ namespace Parchis
 {
    public class Candidates
    {
-      public IEnumerable<Move> From(IEnumerable<Token> tokens, Path path, int moves)
+      public IEnumerable<Move> From(IEnumerable<Token> tokens, int moves)
       {
+         if (tokens.Select(t => t.Color).Distinct().Count() > 1)
+            throw new Exception("Candidates from multiple colors!");
+
+         Path path = Board.Paths.For(tokens.First().Color);
+
          List<Move> candidates = new List<Move>();
 
          Token atHome = tokens.FirstOrDefault(t => t.Position.AtHome());

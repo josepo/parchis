@@ -20,12 +20,12 @@ namespace Parchis
       private IEnumerable<Token> Tokens { get; }
       private Candidates Candidates { get; }
 
-      private Dictionary<Color, Path> Paths = new Dictionary<Color, Path>
+      public static Paths Paths = new Paths()
       {
-         { Color.Yellow, new Path(4, 68, End) },
-         { Color.Red, new Path(38, 34, End) },
-         { Color.Blue, new Path(21, 17, End) },
-         { Color.Green, new Path(55, 51, End) }
+         Yellow = new Path(4, 68, End),
+         Red = new Path(38, 34, End),
+         Blue = new Path(21, 17, End),
+         Green = new Path(55, 51, End)
       };
 
       public Board(Candidates candidates, params Token[] tokens)
@@ -35,7 +35,7 @@ namespace Parchis
       }
 
       public IEnumerable<Move> GetCandidates(Color color, int moves) =>
-         Candidates.From(Tokens.Where(t => t.Color == color), Paths[color], moves);
+         Candidates.From(Tokens.Where(t => t.Color == color), moves);
 
       public bool AnyWinner()
       {

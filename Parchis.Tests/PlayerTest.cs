@@ -19,22 +19,20 @@ namespace Parchis.Tests
       [Fact]
       public void FirstTokenIsMoved()
       {
-         Token token = new Token(Color.Blue, Position.OnBoard(7));
+         Token token = Token.Blue.ToBoard(7);
 
          IDice dice = Substitute.For<IDice>();
          dice.Roll().Returns(3);
 
-         IBoard board = Substitute.For<IBoard>();
-         board.GetCandidates(Color.Blue, 3).Returns(new List<Move> { 
-            new Move(token, Position.OnBoard(10))
-         });
+         Board board =
+            new Board(new Candidates(), new List<Token> { token, Token.Blue });
 
          Player player =
             PlayerBuilder.Blue().Dice(dice).Board(board);
 
          player.Move();
 
-         Assert.True(token.Position.AtBoard(10));
+         Assert.True(board.Tokens[0].Position.AtBoard(10));
       }
    }
 }

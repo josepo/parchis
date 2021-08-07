@@ -8,6 +8,9 @@ namespace Parchis
    {
       public IEnumerable<Move> From(IEnumerable<Token> tokens, int moves)
       {
+         if (!tokens.Any())
+            throw new Exception("No tokens to select candidates from!");
+
          if (tokens.Select(t => t.Color).Distinct().Count() > 1)
             throw new Exception("Candidates from multiple colors!");
 

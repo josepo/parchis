@@ -1,10 +1,12 @@
+using System.Collections.Generic;
+
 namespace Parchis.Tests
 {
    public class PlayerBuilder
    {
       private Color _color;
       private IDice _dice = new Dice();
-      private IBoard _board = new Board(new Candidates());
+      private IBoard _board = new Board(new Candidates(), new List<Token>() {});
 
       private PlayerBuilder(Color color)
       {

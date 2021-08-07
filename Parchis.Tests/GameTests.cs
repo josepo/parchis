@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Xunit;
 
 namespace Parchis.Tests
@@ -9,8 +10,7 @@ namespace Parchis.Tests
       {
          Board board = new Board(
             new Candidates(),
-            new Token(Color.Blue, Position.Heaven),
-            new Token(Color.Red));
+            new List<Token> { Token.Blue.ToHeaven(), Token.Red });
 
          IPlayers players = new Players();
          players.Add(PlayerBuilder.Blue().Board(board));
@@ -26,8 +26,7 @@ namespace Parchis.Tests
       {
          Board board = new Board(
             new Candidates(),
-            new Token(Color.Blue),
-            new Token(Color.Red));
+            new List<Token> { Token.Blue, Token.Red });
 
          IPlayers players = new Players();
          players.Add(PlayerBuilder.Blue().Board(board));

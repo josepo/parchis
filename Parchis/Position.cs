@@ -38,7 +38,7 @@ namespace Parchis
          string result = Section.ToString();
 
          if (AtBoard() || AtLadder())
-            result += $" { Square } ";
+            result += $" { Square }";
 
          return result;
       }

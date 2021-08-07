@@ -6,7 +6,7 @@ namespace Parchis
    {
       static void Main(string[] args)
       {
-         Game game = GameFactory.For(Color.Green, Color.Blue);
+         Game game = GameFactory.New();
 
          Console.Clear();
          Console.WriteLine(game);

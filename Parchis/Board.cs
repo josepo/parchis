@@ -10,6 +10,8 @@ namespace Parchis
       IEnumerable<Move> GetCandidates(Color color, int moves);
       bool AnyWinner();
       Color Winner();
+
+      void Move(Move move);
    }
 
    internal class Board : IBoard
@@ -17,7 +19,7 @@ namespace Parchis
       private const int Start = 1;
       private const int End = 68;
 
-      private IEnumerable<Token> Tokens { get; }
+      public List<Token> Tokens { get; private set; }
       private Candidates Candidates { get; }
 
       public static Paths Paths = new Paths()
@@ -28,7 +30,7 @@ namespace Parchis
          Green = new Path(55, 51, End)
       };
 
-      public Board(Candidates candidates, params Token[] tokens)
+      public Board(Candidates candidates, List<Token> tokens)
       {
          Tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
          Candidates = candidates ?? throw new ArgumentNullException(nameof(candidates));
@@ -36,6 +38,16 @@ namespace Parchis
 
       public IEnumerable<Move> GetCandidates(Color color, int moves) =>
          Candidates.From(Tokens.Where(t => t.Color == color), moves);
+
+      public void Move(Move move)
+      {
+         int index = Tokens.FindIndex(t => t == move.Token);
+
+         if (index == -1)
+            throw new Exception("Cannot move token, it is not in board!");
+
+         Tokens[index] = move.Token.To(move.Destination);
+      }
 
       public bool AnyWinner()
       {
@@ -60,8 +72,10 @@ namespace Parchis
 
          foreach(IGrouping<Color, Token> group in Tokens.GroupBy(t => t.Color))
          {
+            builder = builder.Append($" { group.Key, 10 }:");
+
             foreach(Token token in group)
-               builder = builder.AppendLine($"  { token }");
+               builder = builder.Append($"\t{ token.Position, -10 }");
 
             builder = builder.AppendLine();
          }

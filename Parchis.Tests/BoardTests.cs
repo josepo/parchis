@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Xunit;
 
 namespace Parchis.Tests
@@ -9,23 +10,25 @@ namespace Parchis.Tests
       {
          Board board = new Board(
             new Candidates(),
-            new Token(Color.Red, Position.OnLadder(3)),
-            new Token(Color.Blue, Position.Heaven)
+            new List<Token> { Token.Red.ToLadder(3), Token.Blue.ToHeaven() }
          );
 
          Assert.True(board.AnyWinner());
+         Assert.Equal(Color.Blue, board.Winner());
       }
 
       [Fact]
-      public void Winner()
+      public void MoveToken()
       {
-         Board board = new Board(
-            new Candidates(),
-            new Token(Color.Red, Position.OnLadder(3)),
-            new Token(Color.Blue, Position.Heaven)
-         );
+         Token token = Token.Green.ToBoard(64);
+         Move move = new Move(token, Position.OnBoard(66));
 
-         Assert.Equal(Color.Blue, board.Winner());
+         Board board =
+            new Board(new Candidates(), new List<Token> { token });
+
+         board.Move(move);
+
+         Assert.True(board.Tokens[0].Position.AtBoard(66));
       }
    }
 }

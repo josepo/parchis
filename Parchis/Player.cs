@@ -22,12 +22,7 @@ namespace Parchis
          IEnumerable<Move> candidates = Board.GetCandidates(Color, Dice.Roll());
 
          if (candidates.Any())
-         {
-            Move move = candidates.First();
-
-            Token token = move.Token;
-            token.Position = move.Destination;
-         }
+            Board.Move(candidates.First());
       }
 
       public Player Clone() => new Player(Color, Board, Dice);

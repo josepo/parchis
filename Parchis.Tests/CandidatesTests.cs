@@ -10,10 +10,8 @@ namespace Parchis.Tests
       [Fact]
       public void OnBoard()
       {
-         List<Token> tokens = new List<Token>
-         {
-            new Token(Color.Yellow, Position.OnBoard(7))
-         };
+         List<Token> tokens =
+            new List<Token> { Token.Yellow.ToBoard(7) };
 
          IEnumerable<Move> candidates = new Candidates().From(tokens, 2);
 
@@ -23,10 +21,8 @@ namespace Parchis.Tests
       [Fact]
       public void PassingBoardEnd()
       {
-         List<Token> tokens = new List<Token>
-         {
-            new Token(Color.Green, Position.OnBoard(66))
-         };
+         List<Token> tokens =
+            new List<Token> { Token.Green.ToBoard(66) };
 
          IEnumerable<Move> candidates = new Candidates().From(tokens, 5);
 
@@ -36,10 +32,8 @@ namespace Parchis.Tests
       [Fact]
       public void FromBoardToLadder()
       {
-         List<Token> tokens = new List<Token>
-         {
-            new Token(Color.Yellow, Position.OnBoard(66))
-         };
+         List<Token> tokens =
+            new List<Token> { Token.Yellow.ToBoard(66) };
 
          IEnumerable<Move> candidates = new Candidates().From(tokens, 4);
 
@@ -49,10 +43,8 @@ namespace Parchis.Tests
       [Fact]
       public void FromLadderToHeaven()
       {
-         List<Token> tokens = new List<Token>
-         {
-            new Token(Color.Yellow, Position.OnLadder(3))
-         };
+         List<Token> tokens =
+            new List<Token> { Token.Yellow.ToLadder(3) };
 
          IEnumerable<Move> candidates = new Candidates().From(tokens, 5);
 
@@ -62,11 +54,8 @@ namespace Parchis.Tests
       [Fact]
       public void FromHomeToBoard()
       {
-         List<Token> tokens = new List<Token>
-         {
-            new Token(Color.Blue, Position.OnBoard(12)),
-            new Token(Color.Blue)
-         };
+         List<Token> tokens =
+            new List<Token> { Token.Blue.ToBoard(12), Token.Blue };
 
          IEnumerable<Move> candidates = new Candidates().From(tokens, 5);
 
@@ -76,10 +65,8 @@ namespace Parchis.Tests
       [Fact]
       public void AtHeaven()
       {
-         List<Token> tokens = new List<Token>
-         {
-            new Token(Color.Blue, Position.Heaven)
-         };
+         List<Token> tokens =
+            new List<Token> { Token.Blue.ToHeaven() };
 
          IEnumerable<Move> candidates = new Candidates().From(tokens, 5);
 

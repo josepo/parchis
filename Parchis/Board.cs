@@ -49,20 +49,16 @@ namespace Parchis
          Tokens[index] = move.Token.To(move.Destination);
       }
 
-      public bool AnyWinner()
-      {
-         return Tokens
-            .GroupBy(t => t.Color)
-            .Any(g => g.All(t => t.Position.AtHeaven()));
-      }
+      public bool AnyWinner() => Winners().Any();
+      public Color Winner() => Winners().Single();
 
-      public Color Winner()
+      private IEnumerable<Color> Winners()
       {
-         return Tokens
-            .GroupBy(t => t.Color)
-            .Single(g => g.All(t => t.Position.AtHeaven()))
-            .First()
-            .Color;
+         return
+            Tokens
+               .GroupBy(t => t.Color)
+               .Where(g => g.All(t => t.Position.AtHeaven()))
+               .Select(g => g.Key);
       }
 
       public override string ToString()

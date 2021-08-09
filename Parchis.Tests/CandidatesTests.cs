@@ -93,5 +93,35 @@ namespace Parchis.Tests
 
          Assert.True(move.Destination.AtBoard(9));
       }
+
+      [Fact]
+      public void TwoTokensToHome()
+      {
+         List<Token> tokens = new List<Token>
+         {
+            Token.Green.ToBoard(55),
+            Token.Green
+         };
+
+         Move move =
+            new Candidates().For(Color.Green, 5, tokens).Single();
+
+         Assert.True(move.Destination.AtBoard(60));
+      }
+
+      [Fact]
+      public void MultipleTokensInHeaven()
+      {
+         List<Token> tokens = new List<Token>
+         {
+            Token.Blue.ToHeaven(),
+            Token.Blue.ToLadder(6)
+         };
+
+         Move move =
+            new Candidates().For(Color.Blue, 2, tokens).Single();
+
+         Assert.True(move.Destination.AtHeaven());
+      }
    }
 }

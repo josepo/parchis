@@ -5,10 +5,16 @@ namespace Parchis
 {
    public class Path
    {
+      public int Start { get; private set; }
+      public int End { get; private set; }
+
       private List<Position> Positions = new List<Position>();
 
       public Path(int start, int end, int boardEnd)
       {
+         Start = start;
+         End = end;
+
          Positions.Add(Position.Home);
 
          for (int i = start; i <= boardEnd; i++)

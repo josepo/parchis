@@ -16,13 +16,18 @@ namespace Parchis
          Path path = Board.Paths.For(color);
          Token atHome;
 
-         if (TryGetTokenAtHome(colorTokens, out atHome) && (moves == 5))
+         if (
+            TryGetTokenAtHome(colorTokens, out atHome) && 
+            (moves == 5) && 
+            !colorTokens.Any(t => t.Position.AtBoard(path.Start)))
+         {
             return MoveToStartingPosition(atHome, path);
+         }
 
          return colorTokens
             .Select(t => new { Token = t, Next = NextPosition(t, path, moves) })
             .Where(x => x.Next != null)
-            .Where(x => !tokens.Any(t => t.Position.Same(x.Next)))
+            .Where(x => !tokens.Any(t => !x.Next.AtHeaven() && t.Position.Same(x.Next)))
             .Select(x => new Move(x.Token, x.Next));
       }
 

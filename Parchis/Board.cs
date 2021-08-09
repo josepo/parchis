@@ -10,7 +10,6 @@ namespace Parchis
       IEnumerable<Move> GetCandidates(Color color, int moves);
       bool AnyWinner();
       Color Winner();
-
       void Move(Move move);
    }
 

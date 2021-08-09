@@ -37,7 +37,7 @@ namespace Parchis
       }
 
       public IEnumerable<Move> GetCandidates(Color color, int moves) =>
-         Candidates.From(Tokens.Where(t => t.Color == color), moves);
+         Candidates.For(color, moves, Tokens);
 
       public void Move(Move move)
       {
@@ -52,14 +52,11 @@ namespace Parchis
       public bool AnyWinner() => Winners().Any();
       public Color Winner() => Winners().Single();
 
-      private IEnumerable<Color> Winners()
-      {
-         return
-            Tokens
-               .GroupBy(t => t.Color)
-               .Where(g => g.All(t => t.Position.AtHeaven()))
-               .Select(g => g.Key);
-      }
+      private IEnumerable<Color> Winners() =>
+         Tokens
+            .GroupBy(t => t.Color)
+            .Where(g => g.All(t => t.Position.AtHeaven()))
+            .Select(g => g.Key);
 
       public override string ToString()
       {

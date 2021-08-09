@@ -33,6 +33,9 @@ namespace Parchis
       public bool AtLadder() => Section == Section.Ladder;
       public bool AtLadder(int square) => (Section == Section.Ladder) && (Square == square);
 
+      public bool Same(Position other) => 
+         (Section == other.Section) && (Square == other.Square);
+
       public override string ToString()
       {
          string result = Section.ToString();

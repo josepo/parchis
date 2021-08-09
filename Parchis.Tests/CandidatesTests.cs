@@ -13,7 +13,8 @@ namespace Parchis.Tests
          List<Token> tokens =
             new List<Token> { Token.Yellow.ToBoard(7) };
 
-         IEnumerable<Move> candidates = new Candidates().From(tokens, 2);
+         IEnumerable<Move> candidates =
+            new Candidates().For(Color.Yellow, 2, tokens);
 
          Assert.True(candidates.Single().Destination.AtBoard(9));
       }
@@ -24,7 +25,8 @@ namespace Parchis.Tests
          List<Token> tokens =
             new List<Token> { Token.Green.ToBoard(66) };
 
-         IEnumerable<Move> candidates = new Candidates().From(tokens, 5);
+         IEnumerable<Move> candidates =
+            new Candidates().For(Color.Green, 5, tokens);
 
          Assert.True(candidates.Single().Destination.AtBoard(3));
       }
@@ -35,7 +37,8 @@ namespace Parchis.Tests
          List<Token> tokens =
             new List<Token> { Token.Yellow.ToBoard(66) };
 
-         IEnumerable<Move> candidates = new Candidates().From(tokens, 4);
+         IEnumerable<Move> candidates =
+            new Candidates().For(Color.Yellow, 4, tokens);
 
          Assert.True(candidates.Single().Destination.AtLadder(2));
       }
@@ -46,7 +49,8 @@ namespace Parchis.Tests
          List<Token> tokens =
             new List<Token> { Token.Yellow.ToLadder(3) };
 
-         IEnumerable<Move> candidates = new Candidates().From(tokens, 5);
+         IEnumerable<Move> candidates =
+            new Candidates().For(Color.Yellow, 5, tokens);
 
          Assert.True(candidates.Single().Destination.AtHeaven());
       }
@@ -57,7 +61,8 @@ namespace Parchis.Tests
          List<Token> tokens =
             new List<Token> { Token.Blue.ToBoard(12), Token.Blue };
 
-         IEnumerable<Move> candidates = new Candidates().From(tokens, 5);
+         IEnumerable<Move> candidates =
+            new Candidates().For(Color.Blue, 5, tokens);
 
          Assert.True(candidates.Single().Destination.AtBoard(21));
       }
@@ -68,9 +73,25 @@ namespace Parchis.Tests
          List<Token> tokens =
             new List<Token> { Token.Blue.ToHeaven() };
 
-         IEnumerable<Move> candidates = new Candidates().From(tokens, 5);
+         IEnumerable<Move> candidates =
+            new Candidates().For(Color.Blue, 5, tokens);
 
          Assert.False(candidates.Any());
+      }
+
+      [Fact]
+      public void MovingToTakenPosition()
+      {
+         List<Token> tokens = new List<Token>
+         {
+            Token.Yellow.ToBoard(5),
+            Token.Yellow.ToBoard(7)
+         };
+
+         Move move =
+            new Candidates().For(Color.Yellow, 2, tokens).Single();
+
+         Assert.True(move.Destination.AtBoard(9));
       }
    }
 }

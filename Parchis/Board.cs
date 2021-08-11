@@ -45,6 +45,19 @@ namespace Parchis
          if (index == -1)
             throw new Exception("Cannot move token, it is not in board!");
 
+         Token tokenInDestination =
+            Tokens.FirstOrDefault(t => t.Position == move.Destination);
+
+         if (
+            (tokenInDestination != null) && 
+            (tokenInDestination.Color != move.Token.Color) && 
+            !move.Destination.AtHeaven())
+         {
+            int indexForEaten = Tokens.FindIndex(t => t == tokenInDestination);
+
+            Tokens[indexForEaten] = tokenInDestination.ToHome();
+         }
+
          Tokens[index] = move.Token.To(move.Destination);
       }
 

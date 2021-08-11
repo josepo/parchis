@@ -19,6 +19,7 @@ namespace Parchis
       }
 
       public Token To(Position position) => new Token(Color, position);
+      public Token ToHome() => new Token(Color, Position.Home);
       public Token ToBoard(int square) => new Token(Color, Position.OnBoard(square));
       public Token ToLadder(int square) => new Token(Color, Position.OnLadder(square));
       public Token ToHeaven() => new Token(Color, Position.Heaven);

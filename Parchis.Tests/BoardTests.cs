@@ -30,5 +30,21 @@ namespace Parchis.Tests
 
          Assert.True(board.Tokens[0].Position.AtBoard(66));
       }
+
+
+      [Fact]
+      public void EatenTokenWillGoHome()
+      {
+         Token eater = Token.Blue.ToBoard(2);
+         Token eaten = Token.Green.ToBoard(6);
+
+         Board board = new Board (
+            new Candidates(),
+            new List<Token> { eater, eaten });
+         
+         board.Move(new Move(eater, eaten.Position));
+
+         Assert.True(board.Tokens[1].Position.AtHome());
+      }      
    }
 }

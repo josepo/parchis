@@ -14,7 +14,7 @@ namespace Parchis
          {
             Position next = path.NextPosition(token.Position, moves);
 
-            if (CanTakePosition(next, tokens))
+            if (token.CanGoTo(next, tokens))
             {
                if (next.AtBoard(path.Start))
                   return new List<Move> { new Move(token, next) };
@@ -24,17 +24,6 @@ namespace Parchis
          }
 
          return candidates;
-      }
-
-      private bool CanTakePosition(Position next, IEnumerable<Token> tokens)
-      {
-         if (next == null)
-            return false;
-
-         if (next.AtHeaven())
-            return true;
-
-         return tokens.All(t => !t.Position.Same(next));
       }
    }
 }

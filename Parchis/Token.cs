@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Parchis
 {
@@ -24,8 +26,17 @@ namespace Parchis
       public Token ToLadder(int square) => new Token(Color, Position.OnLadder(square));
       public Token ToHeaven() => new Token(Color, Position.Heaven);
 
-      public override string ToString() => $"Token { Color } at { Position.ToString() } ";
+      public bool CanGoTo(Position next, IEnumerable<Token> tokens)
+      {
+         if (next == null)
+            return false;
 
-      private Token Copy() => new Token(Color, Position);
+         if (next.AtHeaven())
+            return true;
+
+         return !tokens.Any(t => t.Color == Color && t.Position.Same(next));
+      }
+
+      public override string ToString() => $"Token { Color } at { Position.ToString() } ";
    }
 }

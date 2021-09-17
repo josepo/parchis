@@ -7,32 +7,33 @@ namespace Parchis
 {
    public interface IPlayers
    {
-      void Add(Player player);
       Player GetRandom();
       Player Next(Color color);
    }
 
    internal class Players : IPlayers
    {
-      private List<Player> _players;
+      private List<Player> _players = new List<Player>();
 
-      public Players()
+      public Players(IBoard board, IDice dice)
       {
-         _players = new List<Player>();
+         if (board.AnyBlue())
+            _players.Add(new Player(Color.Blue, board, dice));
+
+         if (board.AnyRed())
+            _players.Add(new Player(Color.Red, board, dice));
+            
+         if (board.AnyYellow())
+            _players.Add(new Player(Color.Yellow, board, dice));
+
+         if (board.AnyGreen())
+            _players.Add(new Player(Color.Green, board, dice));
+
+         if (!_players.Any())
+            throw new Exception("Not even one player in the game!");
       }
 
-      public void Add(Player player)
-      {
-         if (_players.Any(p => p.Color == player.Color))
-            throw new System.Exception("All players should have a unique color.");
-
-         _players.Add(player.Clone());
-      }
-
-      public Player GetRandom()
-      {
-         return _players.First();
-      }
+      public Player GetRandom() => _players.First();
 
       public Player Next(Color color)
       {
@@ -51,10 +52,7 @@ namespace Parchis
          return next;
       }
 
-      private Color NextColor(Color color)
-      {
-         return (Color) ((int)(color + 1) % 4);
-      }
+      private Color NextColor(Color color) => (Color) ((int)(color + 1) % 4);
 
       public override string ToString()
       {

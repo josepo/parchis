@@ -8,15 +8,13 @@ namespace Parchis.Tests
       [Fact]
       public void GameEnds()
       {
-         Board board = new Board(
-            new Candidates(),
-            new List<Token> { Token.Blue.ToHeaven(), Token.Red });
+         Tokens tokens = new Tokens(
+            Token.Blue("B1").ToHeaven(),
+            Token.Red("R1"));
 
-         IPlayers players = new Players();
-         players.Add(PlayerBuilder.Blue().Board(board));
-         players.Add(PlayerBuilder.Red().Board(board));
+         Board board = new Board(tokens);
 
-         Game game = new Game(board, players);
+         Game game = new Game(board, new Players(board, new Dice()));
 
          Assert.True(game.End());
       }
@@ -24,15 +22,13 @@ namespace Parchis.Tests
       [Fact]
       public void TurnChanges()
       {
-         Board board = new Board(
-            new Candidates(),
-            new List<Token> { Token.Blue, Token.Red });
+         Tokens tokens = new Tokens(
+            Token.Blue("B1"),
+            Token.Red("R1"));
 
-         IPlayers players = new Players();
-         players.Add(PlayerBuilder.Blue().Board(board));
-         players.Add(PlayerBuilder.Red().Board(board));
+         Board board = new Board(tokens);
+         Game game = new Game(board, new Players(board, new Dice()));
 
-         Game game = new Game(board, players);
          Player first = game.Current;
 
          game.Move();

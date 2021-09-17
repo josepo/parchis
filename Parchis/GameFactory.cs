@@ -1,41 +1,36 @@
-using System.Collections.Generic;
-
 namespace Parchis
 {
    public static class GameFactory
    {
       public static Game New()
       {
-         List<Token> tokens = new List<Token> {};
+         Tokens tokens = new Tokens
+         (
+            Token.Blue("B1"),
+            Token.Blue("B2"),
+            Token.Blue("B3"),
+            Token.Blue("B4"),
 
-         tokens.AddRange(BlueTokens());
-         tokens.AddRange(RedTokens());
-         tokens.AddRange(YellowTokens());
-         tokens.AddRange(GreenTokens());                                    
+            Token.Red("R1"),
+            Token.Red("R2"),
+            Token.Red("R3"),
+            Token.Red("R4"),
 
-         Board board = new Board(new Candidates(), tokens);
+            Token.Yellow("Y1"),
+            Token.Yellow("Y2"),
+            Token.Yellow("Y3"),
+            Token.Yellow("Y4"),
+
+            Token.Green("G1"),
+            Token.Green("G2"),
+            Token.Green("G3"),
+            Token.Green("G4")
+         );
+
+         Board board = new Board(tokens);
          Dice dice = new Dice();
 
-         Players players = new Players();
-         
-         players.Add(new Player(Color.Blue, board, dice));
-         players.Add(new Player(Color.Green, board, dice));
-         players.Add(new Player(Color.Yellow, board, dice));
-         players.Add(new Player(Color.Red, board, dice));
-
-         return new Game(board, players);
+         return new Game(board, new Players(board, dice));
       }
-
-      private static List<Token> BlueTokens() =>
-         new List<Token> { Token.Blue, Token.Blue, Token.Blue, Token.Blue };
-
-      private static List<Token> RedTokens() =>
-         new List<Token> { Token.Red, Token.Red, Token.Red, Token.Red };
-
-      private static List<Token> YellowTokens() =>
-         new List<Token> { Token.Yellow, Token.Yellow, Token.Yellow, Token.Yellow };
-
-      private static List<Token> GreenTokens() =>
-         new List<Token> { Token.Green, Token.Green, Token.Green, Token.Green };                           
    }
 }

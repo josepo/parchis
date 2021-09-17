@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace Parchis.Tests
@@ -6,27 +5,15 @@ namespace Parchis.Tests
    public class PlayersTests
    {
       [Fact]
-      public void NoRepeatedColorsAllowed()
-      {
-         Assert.Throws<Exception>(() =>
-         {
-            Players players = new Players();
-
-            players.Add(PlayerBuilder.Yellow());
-            players.Add(PlayerBuilder.Green());
-            players.Add(PlayerBuilder.Yellow());
-         });
-      }
-
-      [Fact]
       public void RedIsNextFromGreen()
       {
-         Players players = new Players();
+         Tokens tokens = new Tokens(
+            Token.Yellow("Y1"),
+            Token.Green("G1"),
+            Token.Red("R1"));
 
-         players.Add(PlayerBuilder.Blue());
-         players.Add(PlayerBuilder.Red());
-         players.Add(PlayerBuilder.Green());
-         players.Add(PlayerBuilder.Yellow());
+         Players players =
+            new Players(new Board(tokens), new Dice());
 
          Player next = players.Next(Color.Green);
 
@@ -36,11 +23,12 @@ namespace Parchis.Tests
       [Fact]
       public void YellowIsNextFromRedWhenNoBlue()
       {
-         Players players = new Players();
+         Tokens tokens = new Tokens(
+            Token.Yellow("Y1"),
+            Token.Red("R1"));
 
-         players.Add(PlayerBuilder.Green());
-         players.Add(PlayerBuilder.Red());
-         players.Add(PlayerBuilder.Yellow());
+         Players players =
+            new Players(new Board(tokens), new Dice());
 
          Player next = players.Next(Color.Red);
 

@@ -1,7 +1,5 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Parchis
 {
@@ -9,6 +7,10 @@ namespace Parchis
    {
       IEnumerable<Move> GetCandidates(Color color, int moves);
       bool AnyWinner();
+      bool AnyBlue();
+      bool AnyRed();
+      bool AnyYellow();
+      bool AnyGreen();
       Color Winner();
       void Move(Move move);
    }
@@ -18,8 +20,7 @@ namespace Parchis
       private const int Start = 1;
       private const int End = 68;
 
-      public List<Token> Tokens { get; private set; }
-      private Candidates Candidates { get; }
+      public Tokens Tokens { get; private set; }
 
       public static Paths Paths = new Paths()
       {
@@ -29,63 +30,30 @@ namespace Parchis
          Green = new Path(55, 51, End)
       };
 
-      public Board(Candidates candidates, List<Token> tokens)
+      public Board(Tokens tokens)
       {
          Tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
-         Candidates = candidates ?? throw new ArgumentNullException(nameof(candidates));
       }
 
       public IEnumerable<Move> GetCandidates(Color color, int moves) =>
-         Candidates.For(color, moves, Tokens);
+         Tokens.CandidatesFor(color, moves);
 
       public void Move(Move move)
       {
-         int index = Tokens.FindIndex(t => t == move.Token);
+         Tokens.Move(move.TokenId, move.Destination);
 
-         if (index == -1)
-            throw new Exception("Cannot move token, it is not in board!");
-
-         Token tokenInDestination =
-            Tokens.FirstOrDefault(t => t.Position == move.Destination);
-
-         if (
-            (tokenInDestination != null) && 
-            (tokenInDestination.Color != move.Token.Color) && 
-            !move.Destination.AtHeaven())
-         {
-            int indexForEaten = Tokens.FindIndex(t => t == tokenInDestination);
-
-            Tokens[indexForEaten] = tokenInDestination.ToHome();
-         }
-
-         Tokens[index] = move.Token.To(move.Destination);
+         if (move.Eats)
+            Tokens.Move(move.Eaten.Id, Position.Home);
       }
 
-      public bool AnyWinner() => Winners().Any();
-      public Color Winner() => Winners().Single();
+      public bool AnyWinner() => Tokens.AnyWinner();
 
-      private IEnumerable<Color> Winners() =>
-         Tokens
-            .GroupBy(t => t.Color)
-            .Where(g => g.All(t => t.Position.AtHeaven()))
-            .Select(g => g.Key);
+      public bool AnyBlue() => Tokens.AnyOf(Color.Blue);
+      public bool AnyRed() => Tokens.AnyOf(Color.Red);
+      public bool AnyYellow() => Tokens.AnyOf(Color.Yellow);
+      public bool AnyGreen() => Tokens.AnyOf(Color.Green);
+      public Color Winner() => Tokens.Winner();
 
-      public override string ToString()
-      {
-         StringBuilder builder =
-            new StringBuilder().AppendLine("Board ");
-
-         foreach(IGrouping<Color, Token> group in Tokens.GroupBy(t => t.Color))
-         {
-            builder = builder.Append($" { group.Key, 10 }:");
-
-            foreach(Token token in group)
-               builder = builder.Append($"\t{ token.Position, -10 }");
-
-            builder = builder.AppendLine();
-         }
-
-         return builder.ToString();
-      }
+      public override string ToString() => "Board \n\n" + Tokens.ToString();
    }
 }

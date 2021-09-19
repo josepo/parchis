@@ -27,7 +27,7 @@ namespace Parchis
             Token.Green("G4")
          );
 
-         Board board = new Board(tokens);
+         Board board = new Board(tokens, new Candidate(tokens));
          Dice dice = new Dice();
 
          return new Game(board, new Players(board, dice));

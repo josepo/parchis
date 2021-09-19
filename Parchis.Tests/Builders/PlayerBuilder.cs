@@ -5,12 +5,16 @@ namespace Parchis.Tests
    public class PlayerBuilder
    {
       private Color _color;
-      private IDice _dice = new Dice();
-      private IBoard _board = new Board(new Tokens());
+      private IDice _dice;
+      private IBoard _board;
 
       private PlayerBuilder(Color color)
       {
          _color = color;
+         _dice = new Dice();
+
+         Tokens tokens = new Tokens();
+         _board = new Board(tokens, new Candidate(tokens));
       }
 
       public static PlayerBuilder Blue() => new PlayerBuilder(Color.Blue);

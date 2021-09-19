@@ -25,7 +25,7 @@ namespace Parchis.Tests
          IDice dice = Substitute.For<IDice>();
          dice.Roll().Returns(3);
 
-         Board board = new Board(tokens);
+         Board board = new Board(tokens, new Candidate(tokens));
          Player player = PlayerBuilder.Blue().Dice(dice).Board(board);
 
          player.Move();

@@ -17,26 +17,25 @@ namespace Parchis
 
    internal class Board : IBoard
    {
-      private const int Start = 1;
-      private const int End = 68;
-
       public Tokens Tokens { get; private set; }
+      private ICandidate Candidate { get; set; }
 
       public static Paths Paths = new Paths()
       {
-         Yellow = new Path(4, 68, End),
-         Red = new Path(38, 34, End),
-         Blue = new Path(21, 17, End),
-         Green = new Path(55, 51, End)
+         Yellow = new Path(4, 68, 68),
+         Red = new Path(38, 34, 68),
+         Blue = new Path(21, 17, 68),
+         Green = new Path(55, 51, 68)
       };
 
-      public Board(Tokens tokens)
+      public Board(Tokens tokens, ICandidate candidate)
       {
          Tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
+         Candidate = candidate ?? throw new ArgumentNullException(nameof(candidate));
       }
 
-      public IEnumerable<Move> GetCandidates(Color color, int moves) =>
-         Tokens.CandidatesFor(color, moves);
+      public IEnumerable<Move> GetCandidates(Color color, int moves)
+         => Candidate.For(color, moves);
 
       public void Move(Move move)
       {

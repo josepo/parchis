@@ -12,8 +12,8 @@ namespace Parchis.Tests
             Token.Green("G1"),
             Token.Red("R1"));
 
-         Players players =
-            new Players(new Board(tokens), new Dice());
+         Players players = new Players(
+            new Board(tokens, new Candidate(tokens)), new Dice());
 
          Player next = players.Next(Color.Green);
 
@@ -27,8 +27,8 @@ namespace Parchis.Tests
             Token.Yellow("Y1"),
             Token.Red("R1"));
 
-         Players players =
-            new Players(new Board(tokens), new Dice());
+         Players players = new Players(
+            new Board(tokens, new Candidate(tokens)), new Dice());
 
          Player next = players.Next(Color.Red);
 

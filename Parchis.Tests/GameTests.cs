@@ -12,7 +12,7 @@ namespace Parchis.Tests
             Token.Blue("B1").ToHeaven(),
             Token.Red("R1"));
 
-         Board board = new Board(tokens);
+         Board board = new Board(tokens, new Candidate(tokens));
 
          Game game = new Game(board, new Players(board, new Dice()));
 
@@ -26,7 +26,7 @@ namespace Parchis.Tests
             Token.Blue("B1"),
             Token.Red("R1"));
 
-         Board board = new Board(tokens);
+         Board board = new Board(tokens, new Candidate(tokens));
          Game game = new Game(board, new Players(board, new Dice()));
 
          Player first = game.Current;

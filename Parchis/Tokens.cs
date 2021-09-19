@@ -15,7 +15,7 @@ namespace Parchis
       }
 
       public IEnumerable<Token> At(Position position) => 
-         _tokens.Where(t => t.Position == position);
+         _tokens.Where(t => t.Position.Same(position));
 
       public Token Get(string id) => _tokens.Single(t => t.Id == id);
 
@@ -25,55 +25,6 @@ namespace Parchis
       }
 
       private int GetIndex(string id) => _tokens.FindIndex(t => t.Id == id);
-
-      public IEnumerable<Move> CandidatesFor(Color color, int moves)
-      {
-         List<Move> candidates = new List<Move>();
-         Path path = Board.Paths.For(color);
-
-         foreach (Token token in _tokens.Where(t => t.Color == color))
-         {
-            Position next = path.NextPosition(token.Position, moves);
-
-            if (CanMoveTo(token, next))
-            {
-               if (next.AtBoard(path.Start))
-                  return new List<Move> { new Move(token.Id, next) };
-
-               Token eaten = FirstEdible(next, color);
-
-               Move move = (eaten != null)
-                  ? new Move(token.Id, next).WouldEat(eaten)
-                  : new Move(token.Id, next);
-
-               candidates.Add(move);
-            }
-         }
-
-         return candidates;
-      }
-
-      private Token FirstEdible(Position position, Color excludingColor)
-      {
-         if (position.AtHeaven())
-            return null;
-
-         return _tokens
-            .Where(t => t.Position.Same(position))
-            .FirstOrDefault(t => t.Color != excludingColor);
-      }
-
-      private bool CanMoveTo(Token token, Position next)
-      {
-         if (next == null)
-            return false;
-
-         if (next.AtHeaven())
-            return true;
-
-         return !_tokens.Any(t => t.Color == token.Color && t.Position.Same(next));
-      }
-
       public bool AnyWinner() => Winners().Any();
       public bool AnyOf(Color color) => _tokens.Any(t => t.Color == color);
       public Color Winner() => Winners().Single();
@@ -83,6 +34,9 @@ namespace Parchis
             .GroupBy(t => t.Color)
             .Where(g => g.All(t => t.Position.AtHeaven()))
             .Select(g => g.Key);
+
+      public IEnumerable<Token> GetByColor(Color color)
+         => _tokens.Where(t => t.Color == color);
 
       public override string ToString()
       {

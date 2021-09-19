@@ -12,7 +12,7 @@ namespace Parchis.Tests
             Token.Red("R1").ToLadder(3),
             Token.Blue("B1").ToHeaven());
 
-         Board board = new Board(tokens);
+         Board board = new Board(tokens, new Candidate(tokens));
 
          Assert.True(board.AnyWinner());
          Assert.Equal(Color.Blue, board.Winner());
@@ -24,7 +24,7 @@ namespace Parchis.Tests
          Tokens tokens = new Tokens(
             Token.Green("G1").ToBoard(64));
 
-         Board board = new Board(tokens);
+         Board board = new Board(tokens, new Candidate(tokens));
          Move move = new Move("G1", Position.OnBoard(66));
 
          board.Move(move);
@@ -39,7 +39,7 @@ namespace Parchis.Tests
          Token eaten = Token.Green("G1").ToBoard(6);
 
          Tokens tokens = new Tokens(eater, eaten);
-         Board board = new Board(tokens);
+         Board board = new Board(tokens, new Candidate(tokens));
          Move move = new Move(eater.Id, eaten.Position).WouldEat(eaten);
          
          board.Move(move);

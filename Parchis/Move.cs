@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using LanguageExt;
 
 namespace Parchis
 {
@@ -8,9 +9,7 @@ namespace Parchis
       public string TokenId { get; private set; }
       public Position Destination { get; private set; }
 
-      public bool Eats { get; private set; }
-
-      public Token Eaten { get; private set; }
+      public Option<Token> Eaten { get; private set; }
 
       public Move(string tokenId, Position destination)
       {
@@ -20,13 +19,10 @@ namespace Parchis
             throw new ArgumentNullException(nameof(destination));
       }
 
-      public Move WouldEat(Token eaten)
+      public Move(string tokenId, Position destination, Option<Token> eaten)
+         : this(tokenId, destination)
       {
-         return new Move(TokenId, Destination)
-         {
-            Eats = true,
-            Eaten = eaten
-         };
+         Eaten = eaten;
       }
 
       public override string ToString()
@@ -34,8 +30,8 @@ namespace Parchis
          StringBuilder builder = new StringBuilder(
             $"{ TokenId } moves to { Destination }");
 
-         if (Eats)
-            builder.Append($" eating { Eaten.Id }");
+         builder.Append(
+            Eaten.Match(t => $", eating { t.Id }", ""));
 
          return builder.ToString();
       }

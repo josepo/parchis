@@ -41,8 +41,9 @@ namespace Parchis
       {
          Tokens.Move(move.TokenId, move.Destination);
 
-         if (move.Eats)
-            Tokens.Move(move.Eaten.Id, Position.Home);
+         move.Eaten.IfSome(t => {
+            Tokens.Move(t.Id, Position.Home);
+         });
       }
 
       public bool AnyWinner() => Tokens.AnyWinner();

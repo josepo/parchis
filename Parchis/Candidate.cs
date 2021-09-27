@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using LanguageExt;
 
 namespace Parchis
 {
@@ -32,23 +33,19 @@ namespace Parchis
                if (next.AtBoard(path.Start))
                   return new List<Move> { new Move(token.Id, next) };
 
-               Token eaten = FirstEdible(next, color);
+               Option<Token> eaten = FirstEdible(next, color);
 
-               Move move = (eaten != null)
-                  ? new Move(token.Id, next).WouldEat(eaten)
-                  : new Move(token.Id, next);
-
-               candidates.Add(move);
+               candidates.Add(new Move(token.Id, next, eaten));
             }
          }
 
          return candidates;
       }
 
-      private Token FirstEdible(Position position, Color excludingColor)
+      private Option<Token> FirstEdible(Position position, Color excludingColor)
       {
          if (position.AtHeaven())
-            return null;
+            return Option<Token>.None;
 
          return Tokens
             .At(position)

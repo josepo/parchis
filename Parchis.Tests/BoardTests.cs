@@ -40,7 +40,7 @@ namespace Parchis.Tests
 
          Tokens tokens = new Tokens(eater, eaten);
          Board board = new Board(tokens, new Candidate(tokens));
-         Move move = new Move(eater.Id, eaten.Position).WouldEat(eaten);
+         Move move = new Move(eater.Id, eaten.Position, eaten);
          
          board.Move(move);
 

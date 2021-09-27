@@ -131,8 +131,7 @@ namespace Parchis.Tests
             new Candidate(tokens).For(Color.Blue, 2).Single();
 
          Assert.True(move.Destination.AtHeaven());
-         Assert.False(move.Eats);
+         Assert.True(move.Eaten.IsNone);
       }
-
    }
 }

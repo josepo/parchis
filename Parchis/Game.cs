@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using LanguageExt;
 
 namespace Parchis
 {
@@ -7,6 +8,8 @@ namespace Parchis
    {
       private IBoard Board { get; }
       private IPlayers Players { get; }
+      private Option<Move> LastMove { get; set; }
+
       public Player Current { get; private set; }
 
       public Game(IBoard board, IPlayers players)
@@ -14,6 +17,7 @@ namespace Parchis
          Board = board ?? throw new ArgumentNullException(nameof(board));
          Players = players ?? throw new ArgumentNullException(nameof(players));
          Current = Players.GetRandom();
+         LastMove = Option<Move>.None;
       }
 
       public bool End() => Board.AnyWinner();
@@ -21,7 +25,7 @@ namespace Parchis
 
       public void Move()
       {
-         Current.Move();
+         LastMove = Current.Move();
          Current = Players.Next(Current.Color);
       }
 
@@ -33,7 +37,10 @@ namespace Parchis
                .AppendLine("Game")
                .AppendLine($"  { Current.Color } to play")
                .AppendLine()
-               .Append(Board.ToString())
+               .AppendLine("Last move")
+               .AppendLine("  " + LastMove.Match(m => m.ToString(), "-"))
+               .AppendLine()
+               .AppendLine(Board.ToString())
                .ToString();
       }
    }

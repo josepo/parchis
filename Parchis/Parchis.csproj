@@ -11,4 +11,8 @@
       </AssemblyAttribute>
    </ItemGroup>
 
+   <ItemGroup>
+     <PackageReference Include="LanguageExt.Core" Version="3.4.15" />
+   </ItemGroup>
+
 </Project>

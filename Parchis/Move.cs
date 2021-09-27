@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace Parchis
 {
@@ -14,7 +15,9 @@ namespace Parchis
       public Move(string tokenId, Position destination)
       {
          TokenId = tokenId ?? throw new ArgumentNullException(nameof(tokenId));
-         Destination = destination ?? throw new ArgumentNullException(nameof(destination));
+
+         Destination = destination ?? 
+            throw new ArgumentNullException(nameof(destination));
       }
 
       public Move WouldEat(Token eaten)
@@ -24,6 +27,17 @@ namespace Parchis
             Eats = true,
             Eaten = eaten
          };
+      }
+
+      public override string ToString()
+      {
+         StringBuilder builder = new StringBuilder(
+            $"{ TokenId } moves to { Destination }");
+
+         if (Eats)
+            builder.Append($" eating { Eaten.Id }");
+
+         return builder.ToString();
       }
    }
 }

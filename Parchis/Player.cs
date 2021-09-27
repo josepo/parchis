@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LanguageExt;
 
 namespace Parchis
 {
@@ -17,12 +18,19 @@ namespace Parchis
          Dice = dice ?? throw new ArgumentNullException(nameof(dice));
       }
 
-      public void Move()
+      public Option<Move> Move()
       {
          IEnumerable<Move> candidates = Board.GetCandidates(Color, Dice.Roll());
 
          if (candidates.Any())
-            Board.Move(candidates.First());
+         {
+            Move move = candidates.First();
+
+            Board.Move(move);
+            return move;
+         }
+
+         return Option<Move>.None;
       }
 
       public Player Clone() => new Player(Color, Board, Dice);

@@ -8,7 +8,7 @@ namespace Parchis
    public interface IPlayers
    {
       Player GetRandom();
-      Player Next(Color color);
+      Player Next(Player current);
    }
 
    internal class Players : IPlayers
@@ -35,21 +35,17 @@ namespace Parchis
 
       public Player GetRandom() => _players.First();
 
-      public Player Next(Color color)
+      public Player Next(Player current)
       {
          if (_players.Count == 1)
             throw new Exception("Only one player!");
 
-         Color nextColor = NextColor(color);
-         Player next = null;
+         Color nextColor = NextColor(current.Color);
 
-         while (next == null)
-         {
-            next = _players.FirstOrDefault(p => p.Color == nextColor);
+         while (!_players.Any(p => p.Color == nextColor))
             nextColor = NextColor(nextColor);
-         }
 
-         return next;
+         return _players.Single(p => p.Color == nextColor);
       }
 
       private Color NextColor(Color color) => (Color) ((int)(color + 1) % 4);

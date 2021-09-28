@@ -26,7 +26,7 @@ namespace Parchis
       public void Move()
       {
          LastMove = Current.Move();
-         Current = Players.Next(Current.Color);
+         Current = Players.Next(Current);
       }
 
       public override string ToString()

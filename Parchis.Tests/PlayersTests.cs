@@ -12,12 +12,15 @@ namespace Parchis.Tests
             Token.Green("G1"),
             Token.Red("R1"));
 
-         Players players = new Players(
-            new Board(tokens, new Candidate(tokens)), new Dice());
+         Dice dice = new Dice();
 
-         Player next = players.Next(Color.Green);
+         Board board = 
+            new Board(tokens, new Candidate(tokens));
 
-         Assert.Equal(Color.Red, next.Color);
+         Players players = new Players(board, dice);
+         Player current = new Player(Color.Green, board, dice);
+
+         Assert.Equal(Color.Red, players.Next(current).Color);
       }
 
       [Fact]
@@ -27,12 +30,15 @@ namespace Parchis.Tests
             Token.Yellow("Y1"),
             Token.Red("R1"));
 
-         Players players = new Players(
-            new Board(tokens, new Candidate(tokens)), new Dice());
+         Dice dice = new Dice();
 
-         Player next = players.Next(Color.Red);
+         Board board =
+            new Board(tokens, new Candidate(tokens));
 
-         Assert.Equal(Color.Yellow, next.Color);         
+         Players players = new Players(board, dice);
+         Player current = new Player(Color.Red, board, dice);
+
+         Assert.Equal(Color.Yellow, players.Next(current).Color);         
       }
    }
 }

@@ -24,43 +24,53 @@ namespace Parchis
          List<Move> candidates = new List<Move>();
          Path path = Board.Paths.For(color);
 
-         foreach (Token token in Tokens.GetByColor(color))
+         foreach (Move move in MovesFor(color, moves))
          {
-            Position next = path.NextPosition(token.Position, moves);
+            if (move.Destination.AtBoard(path.Start))
+               return new List<Move> { move };
 
-            if (CanMoveTo(token, next))
-            {
-               if (next.AtBoard(path.Start))
-                  return new List<Move> { new Move(token.Id, next) };
-
-               Option<Token> eaten = FirstEdible(next, color);
-
-               candidates.Add(new Move(token.Id, next, eaten));
-            }
+            candidates.Add(move);
          }
 
          return candidates;
       }
 
-      private Option<Token> FirstEdible(Position position, Color excludingColor)
+      private IEnumerable<Move> MovesFor(Color color, int moves)
       {
-         if (position.AtHeaven())
-            return Option<Token>.None;
+         Path path = Board.Paths.For(color);
 
          return Tokens
-            .At(position)
-            .FirstOrDefault(t => t.Color != excludingColor);
-      }      
+            .GetByColor(color)
+            .Select(t => NextMove(t, path, moves))
+            .Where(m => m.IsSome)
+            .Select<Option<Move>, Move>(m => (Move) m);
+      }
 
-      private bool CanMoveTo(Token token, Position next)
+      private Option<Move> NextMove(Token token, Path path, int moves)
       {
-         if (next == null)
-            return false;
+         Option<Position> next = 
+            path.NextPosition(token.Position, moves);
 
+         if (next.IsNone)
+            return Option<Move>.None;
+
+         return NextMove(token, (Position) next);
+      }
+
+      private Option<Move> NextMove(Token token, Position next)
+      {
          if (next.AtHeaven())
-            return true;
+            return new Move(token.Id, next);
 
-         return !Tokens.At(next).Any(t => t.Color == token.Color);
+         IEnumerable<Token> atNext = Tokens.At(next);
+
+         if (!atNext.Any())
+            return new Move(token.Id, next);
+
+         if (atNext.Any(t => t.Color == token.Color))
+            return Option<Move>.None;
+
+         return new Move(token.Id, next, atNext.First());
       }
    }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LanguageExt;
 
 namespace Parchis
 {
@@ -30,13 +31,12 @@ namespace Parchis
          Positions.Add(Position.Heaven);
       }
 
-      public Position NextPosition(Position start, int moves)
+      public Option<Position> NextPosition(Position start, int moves)
       {
          if (start.AtHeaven())
-            return null;
+            return Option<Position>.None;
 
-         int current =
-            Positions.FindIndex(p => p.Section == start.Section && p.Square == start.Square);
+         int current = FindPositionIndex(start);
 
          if (current == -1)
             throw new Exception($"Position { start } not in path { this }");
@@ -46,7 +46,7 @@ namespace Parchis
             if (moves == 5)
                return Positions[1];
 
-            return null;
+            return Option<Position>.None;;
          }
 
          int next = current + moves;
@@ -54,7 +54,14 @@ namespace Parchis
          if (next < Positions.Count)
             return Positions[next];
 
-         return null;
+         return Option<Position>.None;;
+      }
+
+      private int FindPositionIndex(Position position)
+      {
+         return Positions.FindIndex(p => 
+            p.Section == position.Section &&
+            p.Square == position.Square);
       }
    }
 }

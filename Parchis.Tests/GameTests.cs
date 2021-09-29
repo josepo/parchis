@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Xunit;
 
 namespace Parchis.Tests
@@ -27,13 +26,15 @@ namespace Parchis.Tests
             Token.Red("R1"));
 
          Board board = new Board(tokens, new Candidate(tokens));
-         Game game = new Game(board, new Players(board, new Dice()));
+         Players players = new Players(board, new Dice());
 
-         Player first = game.Current;
+         Game game = new Game(board, players);
+
+         Player first = players.Current;
 
          game.Move();
 
-         Assert.NotEqual(first.Color, game.Current.Color);
+         Assert.NotEqual(first.Color, players.Current.Color);
       }
    }
 }

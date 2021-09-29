@@ -1,4 +1,4 @@
-using NSubstitute;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Parchis.Tests
@@ -6,32 +6,20 @@ namespace Parchis.Tests
    public class PlayerTests
    {
       [Fact]
-      public void Clone()
-      {
-         Player player = PlayerBuilder.Blue();
-         Player clone = player.Clone();
-
-         Assert.Equal(player.Color, clone.Color);
-         Assert.NotEqual(player, clone);
-      }
-
-      [Fact]
-      public void FirstTokenIsMoved()
+      public void FistMoveIsSelected()
       {
          Tokens tokens = new Tokens(
             Token.Blue("B1").ToBoard(7),
             Token.Blue("B2"));
 
-         IDice dice = Substitute.For<IDice>();
-         dice.Roll().Returns(3);
-
          Board board = new Board(tokens, new Candidate(tokens));
-         Player player = PlayerBuilder.Blue().Dice(dice).Board(board);
+         IEnumerable<Move> moves = board.GetCandidates(Color.Blue, 3);
 
-         player.Move();
+         Player player = PlayerBuilder.Blue();
+         Move move = (Move) player.SelectMove(moves);
 
-         Assert.True(tokens.Get("B1").Position.AtBoard(10));
-         Assert.True(tokens.Get("B2").Position.AtHome());
+         Assert.Equal("B1", move.TokenId);
+         Assert.True(move.Destination.AtBoard(10));
       }
    }
 }

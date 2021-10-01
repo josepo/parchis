@@ -58,15 +58,13 @@ namespace Parchis
          if (_players.Count == 1)
             throw new Exception("Only one player!");
 
-         Color nextColor = NextColor(Current.Color);
+         Color nextColor = Current.Color.Next();
 
-         while (!_players.Any(p => p.Color == nextColor))
-            nextColor = NextColor(nextColor);
+         while (!_players.Any(p => p.Color.Is(nextColor)))
+            nextColor = nextColor.Next();
 
-         Current = _players.Single(p => p.Color == nextColor);
+         Current = _players.Single(p => p.Color.Is(nextColor));
       }
-
-      private Color NextColor(Color color) => (Color) ((int)(color + 1) % 4);
 
       public override string ToString()
       {

@@ -67,7 +67,7 @@ namespace Parchis
          if (!atNext.Any())
             return new Move(token.Id, next);
 
-         if (atNext.Any(t => t.Color == token.Color))
+         if (atNext.Any(t => t.Color.Is(token.Color)))
             return Option<Move>.None;
 
          return new Move(token.Id, next, atNext.First());

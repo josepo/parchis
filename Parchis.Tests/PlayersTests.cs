@@ -19,7 +19,9 @@ namespace Parchis.Tests
 
          players.EndTurn();
 
-         Assert.NotEqual(first.Color, players.Current.Color);
+         Player next = players.Current;
+
+         Assert.False(next.Color.Is(first.Color));
       }
    }
 }

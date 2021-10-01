@@ -15,7 +15,7 @@ namespace Parchis.Tests
          Board board = new Board(tokens, new Candidate(tokens));
 
          Assert.True(board.AnyWinner());
-         Assert.Equal(Color.Blue, board.Winner());
+         Assert.True(board.Winner().IsBlue());
       }
 
       [Fact]

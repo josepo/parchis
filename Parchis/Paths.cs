@@ -11,23 +11,19 @@ namespace Parchis
 
       public Path For(Color color)
       {
-         switch(color)
-         {
-            case Color.Yellow:
-               return Yellow;
+         if (color.IsYellow())
+            return Yellow;
 
-            case Color.Red:
-               return Red;
+         if (color.IsRed())
+            return Red;
 
-            case Color.Blue:
-               return Blue;
+         if (color.IsBlue())
+            return Blue;
 
-            case Color.Green:
-               return Green;
+         if (color.IsGreen())
+            return Green;
 
-            default:
-               throw new Exception($"{ color } not a valid color");
-         }
+         throw new Exception($"{ color } not a valid color");
       }
    }
 }

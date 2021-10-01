@@ -26,7 +26,7 @@ namespace Parchis
 
       private int GetIndex(string id) => _tokens.FindIndex(t => t.Id == id);
       public bool AnyWinner() => Winners().Any();
-      public bool AnyOf(Color color) => _tokens.Any(t => t.Color == color);
+      public bool AnyOf(Color color) => _tokens.Any(t => t.Color.Is(color));
       public Color Winner() => Winners().Single();
 
       private IEnumerable<Color> Winners() =>
@@ -36,7 +36,7 @@ namespace Parchis
             .Select(g => g.Key);
 
       public IEnumerable<Token> GetByColor(Color color)
-         => _tokens.Where(t => t.Color == color);
+         => _tokens.Where(t => t.Color.Is(color));
 
       public override string ToString()
       {

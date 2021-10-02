@@ -63,5 +63,8 @@ namespace Parchis
             p.Section == position.Section &&
             p.Square == position.Square);
       }
+
+      public bool IsStart(Position position) =>
+         position.Same(Position.OnBoard(Start));
    }
 }

@@ -26,7 +26,7 @@ namespace Parchis
 
          foreach (Move move in MovesFor(color, n))
          {
-            if (move.Destination.AtBoard(path.Start))
+            if (path.IsStart(move.Destination))
                return new Moves(move);
 
             moves.Add(move);

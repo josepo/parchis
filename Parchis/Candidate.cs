@@ -7,7 +7,7 @@ namespace Parchis
 {
    public interface ICandidate
    {
-      IEnumerable<Move> For(Color color, int moves);
+      Moves For(Color color, int moves);
    }
 
    internal class Candidate : ICandidate
@@ -19,20 +19,20 @@ namespace Parchis
          Tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
       }
 
-      public IEnumerable<Move> For(Color color, int moves)
+      public Moves For(Color color, int n)
       {
-         List<Move> candidates = new List<Move>();
+         Moves moves = new Moves();
          Path path = Board.Paths.For(color);
 
-         foreach (Move move in MovesFor(color, moves))
+         foreach (Move move in MovesFor(color, n))
          {
             if (move.Destination.AtBoard(path.Start))
-               return new List<Move> { move };
+               return new Moves(move);
 
-            candidates.Add(move);
+            moves.Add(move);
          }
 
-         return candidates;
+         return moves;
       }
 
       private IEnumerable<Move> MovesFor(Color color, int moves)

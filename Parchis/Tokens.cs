@@ -11,7 +11,8 @@ namespace Parchis
 
       public Tokens(params Token[] tokens)
       {
-         _tokens = tokens.ToList() ?? throw new ArgumentNullException(nameof(tokens));
+         _tokens = tokens.ToList() ?? 
+            throw new ArgumentNullException(nameof(tokens));
       }
 
       public IEnumerable<Token> At(Position position) => 

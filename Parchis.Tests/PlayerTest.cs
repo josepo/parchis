@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Xunit;
 
 namespace Parchis.Tests
@@ -13,7 +12,7 @@ namespace Parchis.Tests
             Token.Blue("B2"));
 
          Board board = new Board(tokens, new Candidate(tokens));
-         IEnumerable<Move> moves = board.GetCandidates(Color.Blue, 3);
+         Moves moves = board.GetCandidates(Color.Blue, 3);
 
          Player player = PlayerBuilder.Blue();
          Move move = (Move) player.SelectMove(moves);

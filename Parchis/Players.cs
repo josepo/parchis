@@ -47,7 +47,7 @@ namespace Parchis
 
       public Option<Move> NextMove()
       {
-         IEnumerable<Move> candidates =
+         Moves candidates =
             Board.GetCandidates(Current.Color, Dice.Roll());
 
          return Current.SelectMove(candidates);

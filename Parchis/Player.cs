@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using LanguageExt;
 
 namespace Parchis
@@ -13,9 +11,6 @@ namespace Parchis
          Color = color;
       }
 
-      public Option<Move> SelectMove(IEnumerable<Move> moves)
-      {
-         return moves.Any() ? moves.First() : Option<Move>.None;
-      }
+      public Option<Move> SelectMove(Moves moves) => moves.First();
    }
 }

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Parchis.Tests
@@ -12,10 +10,10 @@ namespace Parchis.Tests
          Tokens tokens = new Tokens(
             Token.Yellow("Y1").ToBoard(7));
 
-         IEnumerable<Move> candidates =
+         Moves moves =
             new Candidate(tokens).For(Color.Yellow, 2);
 
-         Assert.True(candidates.Single().Destination.AtBoard(9));
+         Assert.True(moves.Single().Destination.AtBoard(9));
       }
 
       [Fact]
@@ -24,10 +22,10 @@ namespace Parchis.Tests
          Tokens tokens = new Tokens(
             Token.Green("G1").ToBoard(66));
 
-         IEnumerable<Move> candidates =
+         Moves moves =
             new Candidate(tokens).For(Color.Green, 5);
 
-         Assert.True(candidates.Single().Destination.AtBoard(3));
+         Assert.True(moves.Single().Destination.AtBoard(3));
       }
 
       [Fact]
@@ -36,10 +34,10 @@ namespace Parchis.Tests
          Tokens tokens = new Tokens(
             Token.Yellow("Y1").ToBoard(66));
 
-         IEnumerable<Move> candidates = 
+         Moves moves = 
             new Candidate(tokens).For(Color.Yellow, 4);
 
-         Assert.True(candidates.Single().Destination.AtLadder(2));
+         Assert.True(moves.Single().Destination.AtLadder(2));
       }
 
       [Fact]
@@ -48,10 +46,10 @@ namespace Parchis.Tests
          Tokens tokens = new Tokens(
             Token.Yellow("Y1").ToLadder(3));
 
-         IEnumerable<Move> candidates = 
+         Moves moves = 
             new Candidate(tokens).For(Color.Yellow, 5);
 
-         Assert.True(candidates.Single().Destination.AtHeaven());
+         Assert.True(moves.Single().Destination.AtHeaven());
       }
 
       [Fact]
@@ -61,10 +59,10 @@ namespace Parchis.Tests
             Token.Blue("B1").ToBoard(12),
             Token.Blue("B2"));
 
-         IEnumerable<Move> candidates = 
+         Moves moves = 
             new Candidate(tokens).For(Color.Blue, 5);
 
-         Assert.True(candidates.Single().Destination.AtBoard(21));
+         Assert.True(moves.Single().Destination.AtBoard(21));
       }
 
       [Fact]
@@ -73,10 +71,10 @@ namespace Parchis.Tests
          Tokens tokens = new Tokens(
             Token.Blue("B1").ToHeaven());
 
-         IEnumerable<Move> candidates = 
+         Moves moves = 
             new Candidate(tokens).For(Color.Blue, 5);
 
-         Assert.False(candidates.Any());
+         Assert.True(moves.Empty());
       }
 
       [Fact]

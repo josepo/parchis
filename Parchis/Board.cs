@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 
 namespace Parchis
 {
    public interface IBoard
    {
-      IEnumerable<Move> GetCandidates(Color color, int moves);
+      Moves GetCandidates(Color color, int moves);
       bool AnyWinner();
       bool AnyBlue();
       bool AnyRed();
@@ -34,7 +33,7 @@ namespace Parchis
          Candidate = candidate ?? throw new ArgumentNullException(nameof(candidate));
       }
 
-      public IEnumerable<Move> GetCandidates(Color color, int moves)
+      public Moves GetCandidates(Color color, int moves)
          => Candidate.For(color, moves);
 
       public void Move(Move move)

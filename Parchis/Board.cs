@@ -16,7 +16,8 @@ namespace Parchis
 
    internal class Board : IBoard
    {
-      public Tokens Tokens { get; private set; }
+      private Tokens Tokens { get; set; }
+      private Blocks Blocks { get; set; }
       private ICandidate Candidate { get; set; }
 
       public static Paths Paths = new Paths()

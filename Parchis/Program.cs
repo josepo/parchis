@@ -7,8 +7,10 @@ namespace Parchis
       static void Main(string[] args)
       {
          Game game = GameFactory.New();
+         BoardPrinter printer = new BoardPrinter(game);
 
          Console.Clear();
+         // Console.WriteLine(printer);
          Console.WriteLine(game);
 
          while (!game.End())
@@ -18,6 +20,7 @@ namespace Parchis
 
             game.Move();
 
+            // Console.WriteLine(printer);
             Console.WriteLine(game);
          }
 

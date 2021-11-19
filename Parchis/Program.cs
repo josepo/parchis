@@ -10,8 +10,8 @@ namespace Parchis
          BoardPrinter printer = new BoardPrinter(game);
 
          Console.Clear();
-         // Console.WriteLine(printer);
          Console.WriteLine(game);
+         Console.WriteLine(printer);
 
          while (!game.End())
          {
@@ -20,8 +20,8 @@ namespace Parchis
 
             game.Move();
 
-            // Console.WriteLine(printer);
             Console.WriteLine(game);
+            Console.WriteLine(printer);
          }
 
          Console.WriteLine($"Player { game.Winner() } wins the game");

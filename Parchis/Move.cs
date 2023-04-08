@@ -7,20 +7,24 @@ namespace Parchis
    public class Move
    {
       public string TokenId { get; private set; }
+      public Position Origin { get; private set; }
       public Position Destination { get; private set; }
-
       public Option<Token> Eaten { get; private set; }
 
-      public Move(string tokenId, Position destination)
+      public Move(Token token, Position destination)
       {
-         TokenId = tokenId ?? throw new ArgumentNullException(nameof(tokenId));
+         if (token == null)
+            throw new ArgumentNullException(nameof(token));
 
-         Destination = destination ?? 
+         TokenId = token.Id;
+         Origin = token.Position;
+
+         Destination = destination ??
             throw new ArgumentNullException(nameof(destination));
       }
 
-      public Move(string tokenId, Position destination, Option<Token> eaten)
-         : this(tokenId, destination)
+      public Move(Token token, Position destination, Option<Token> eaten)
+         : this(token, destination)
       {
          Eaten = eaten;
       }
@@ -28,10 +32,10 @@ namespace Parchis
       public override string ToString()
       {
          StringBuilder builder = new StringBuilder(
-            $"{ TokenId } moves to { Destination }");
+            $"{TokenId} moves from {Origin} to {Destination}");
 
          builder.Append(
-            Eaten.Match(t => $", eating { t.Id }", ""));
+            Eaten.Match(t => $", eating {t.Id}", ""));
 
          return builder.ToString();
       }

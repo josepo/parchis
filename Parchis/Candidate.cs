@@ -43,34 +43,34 @@ namespace Parchis
             .GetByColor(color)
             .Select(t => NextMove(t, path, moves))
             .Where(m => m.IsSome)
-            .Select<Option<Move>, Move>(m => (Move) m);
+            .Select<Option<Move>, Move>(m => (Move)m);
       }
 
       private Option<Move> NextMove(Token token, Path path, int moves)
       {
-         Option<Position> next = 
+         Option<Position> next =
             path.NextPosition(token.Position, moves);
 
          if (next.IsNone)
             return Option<Move>.None;
 
-         return NextMove(token, (Position) next);
+         return NextMove(token, (Position)next);
       }
 
       private Option<Move> NextMove(Token token, Position next)
       {
          if (next.AtHeaven())
-            return new Move(token.Id, next);
+            return new Move(token, next);
 
          IEnumerable<Token> atNext = Tokens.At(next);
 
          if (!atNext.Any())
-            return new Move(token.Id, next);
+            return new Move(token, next);
 
          if (atNext.Any(t => t.Color.Is(token.Color)))
             return Option<Move>.None;
 
-         return new Move(token.Id, next, atNext.First());
+         return new Move(token, next, atNext.First());
       }
    }
 }

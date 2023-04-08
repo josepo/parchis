@@ -25,7 +25,7 @@ namespace Parchis.Tests
             Token.Green("G1").ToBoard(64));
 
          Board board = new Board(tokens, new Candidate(tokens));
-         Move move = new Move("G1", Position.OnBoard(66));
+         Move move = new Move(tokens.Get("G1"), Position.OnBoard(66));
 
          board.Move(move);
 
@@ -40,11 +40,11 @@ namespace Parchis.Tests
 
          Tokens tokens = new Tokens(eater, eaten);
          Board board = new Board(tokens, new Candidate(tokens));
-         Move move = new Move(eater.Id, eaten.Position, eaten);
-         
+         Move move = new Move(eater, eaten.Position, eaten);
+
          board.Move(move);
 
          Assert.True(tokens.Get("G1").Position.AtHome());
-      }      
+      }
    }
 }

@@ -11,10 +11,10 @@ namespace Parchis.Tests
             Token.Yellow("Y1"),
             Token.Red("R1"));
 
-         Board board = 
+         Board board =
             new Board(tokens, new Candidate(tokens));
 
-         Players players = new Players(board, new Dice());
+         Players players = new Players(board);
          Player first = players.Current;
 
          players.EndTurn();

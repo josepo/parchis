@@ -32,7 +32,7 @@ namespace Parchis
       public override string ToString()
       {
          StringBuilder builder = new StringBuilder(
-            $"{TokenId} moves from {Origin} to {Destination}");
+            $"{TokenId} from {Origin} to {Destination}");
 
          builder.Append(
             Eaten.Match(t => $", eating {t.Id}", ""));

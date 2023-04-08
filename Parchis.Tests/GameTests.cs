@@ -12,7 +12,7 @@ namespace Parchis.Tests
             Token.Red("R1"));
 
          Board board = new Board(tokens, new Candidate(tokens));
-         Game game = new Game(board, new Players(board, new Dice()));
+         Game game = new Game(board, new Players(board), new Dice());
 
          Assert.True(game.End());
       }
@@ -27,7 +27,7 @@ namespace Parchis.Tests
             Token.Red("R2"));
 
          Board board = new Board(tokens, new Candidate(tokens));
-         Game game = new Game(board, new Players(board, new Dice()));
+         Game game = new Game(board, new Players(board), new Dice());
 
          Assert.False(game.End());
       }
@@ -40,9 +40,9 @@ namespace Parchis.Tests
             Token.Red("R1"));
 
          Board board = new Board(tokens, new Candidate(tokens));
-         Players players = new Players(board, new Dice());
+         Players players = new Players(board);
 
-         Game game = new Game(board, players);
+         Game game = new Game(board, players, new Dice());
 
          Player first = players.Current;
 

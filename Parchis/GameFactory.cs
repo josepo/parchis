@@ -28,9 +28,8 @@ namespace Parchis
          );
 
          Board board = new Board(tokens, new Candidate(tokens));
-         Dice dice = new Dice();
 
-         return new Game(board, new Players(board, dice));
+         return new Game(board, new Players(board), new Dice());
       }
    }
 }

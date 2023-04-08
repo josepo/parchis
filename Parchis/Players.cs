@@ -10,7 +10,7 @@ namespace Parchis
    {
       Player Current { get; }
 
-      Option<Move> NextMove();
+      Option<Move> NextMove(int roll);
       void EndTurn();
    }
 
@@ -20,19 +20,17 @@ namespace Parchis
 
       private List<Player> _players = new List<Player>();
       private IBoard Board { get; }
-      private IDice Dice { get; }
 
-      public Players(IBoard board, IDice dice)
+      public Players(IBoard board)
       {
          Board = board ?? throw new ArgumentNullException(nameof(board));
-         Dice = dice ?? throw new ArgumentNullException(nameof(dice));
 
          if (board.AnyBlue())
             _players.Add(new Player(Color.Blue));
 
          if (board.AnyRed())
             _players.Add(new Player(Color.Red));
-            
+
          if (board.AnyYellow())
             _players.Add(new Player(Color.Yellow));
 
@@ -45,10 +43,10 @@ namespace Parchis
          Current = _players.First();
       }
 
-      public Option<Move> NextMove()
+      public Option<Move> NextMove(int roll)
       {
          Moves candidates =
-            Board.GetCandidates(Current.Color, Dice.Roll());
+            Board.GetCandidates(Current.Color, roll);
 
          return Current.SelectMove(candidates);
       }
@@ -69,8 +67,8 @@ namespace Parchis
       public override string ToString()
       {
          StringBuilder builder = new StringBuilder();
-         
-         foreach(Player player in _players)
+
+         foreach (Player player in _players)
             builder = builder.AppendLine(player.ToString());
 
          return builder.ToString();
